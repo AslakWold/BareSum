@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name = "s331378-s331389-mappe1+BareSum"
