@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Bare sum</string>
+    <string name="txtStart">Start spill</string>
+    <string name="txtStatistikk">Se statistikk</string>
+    <string name="txtPreferanser">Preferanser</string>
 </resources>
