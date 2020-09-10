@@ -4,50 +4,46 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MatteSpill {
-    String [] oppgaver = new String[25];
 
-    public void fyllOppgaver(String [] oppgaver){
-        oppgaver[0]="12 + 10 = 22";
-        oppgaver[1]="2 + 10 = 12";
-        oppgaver[2]="13 + 13 = 26";
-        oppgaver[3]="5 + 9 = 14";
-        oppgaver[4]="12 + 10 = 22";
-        oppgaver[5]="12 + 10 = 22";
-        oppgaver[6]="12 + 10 = 22";
-        oppgaver[7]="12 + 10 = 22";
-        oppgaver[8]="12 + 10 = 22";
-        oppgaver[9]="12 + 10 = 22";
-        oppgaver[10]="12 + 10 = 22";
-        oppgaver[11]="12 + 10 = 22";
-        oppgaver[12]="12 + 10 = 22";
-        oppgaver[13]="12 + 10 = 22";
-        oppgaver[14]="12 + 10 = 22";
-        oppgaver[15]="12 + 10 = 22";
-        oppgaver[16]="12 + 10 = 22";
-        oppgaver[17]="12 + 10 = 22";
-        oppgaver[18]="12 + 10 = 22";
-        oppgaver[19]="12 + 10 = 22";
-        oppgaver[20]="12 + 10 = 22";
-        oppgaver[21]="12 + 10 = 22";
-        oppgaver[22]="12 + 10 = 22";
-        oppgaver[23]="12 + 10 = 22";
-        oppgaver[24]="12 + 10 = 22";
-    }
-
-    public String[] giOppgaver(String [] oppgaver, String [] utOppgaver, int antOppg){
+    public static String[] giOppgaver(String [] oppgaver, int antOppg){
 
         int nr;
-        ArrayList brukteOppg = new ArrayList<Integer>();
+        String [] utOppgaver = new String[antOppg];
+        int [] brukteOppg = new int[antOppg];
+        boolean exists = false;
 
-        for(int i = 0; i > antOppg; i++){
+
+
+        for(int i = 0; i < antOppg; i++){
+            exists = false;
             nr = (int)(Math.random() * (25));
-            for(int j = 0; j >= brukteOppg.size(); i++){
+            brukteOppg[i] = nr;
 
+            for(int j = 0; j <= i; j++){
+                if(nr == brukteOppg[j] && i!=j){
+                    exists = true;
+                }
             }
 
-            utOppgaver[i] = oppgaver [nr];
+            if(!exists){
+                utOppgaver[i] = oppgaver [nr];
+            }else{
+                i--;
+            }
+
         }
 
         return utOppgaver;
+    }
+
+    public static void splittOppgaver(String [] oppgaverOgSvar, String [] oppgaver, String [] svar){
+        oppgaver = new String[oppgaverOgSvar.length];
+        svar = new String[oppgaverOgSvar.length];
+
+        for(int i = 0; i < oppgaverOgSvar.length; i++){
+            String [] split = oppgaverOgSvar[i].split("=",2);
+            oppgaver[i]=split[0];
+            svar[i]=split[1];
+        }
     }
 }
