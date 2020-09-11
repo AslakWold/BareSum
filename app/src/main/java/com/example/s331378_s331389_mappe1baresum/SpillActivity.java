@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class SpillActivity extends AppCompatActivity {
 
     String [] oppgaverOgSvar;
+    int antallOppgaver;
     int antRiktige;
 
 
@@ -20,10 +21,13 @@ public class SpillActivity extends AppCompatActivity {
 
         Resources res = getResources();
         oppgaverOgSvar = res.getStringArray(R.array.matteoppgaver);
+        String [] utOppgaver = MatteSpill.giOppgaver(oppgaverOgSvar,antallOppgaver);
     }
+
 
     public void leggInnVerdi(TextView tv, int verdi){
         String gmlVerdi = (String)tv.getText();
+        
         if(gmlVerdi!=null) {
             tv.setText(gmlVerdi + verdi);
         }else{

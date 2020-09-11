@@ -3,4 +3,13 @@
     <string name="txtStart">Start spill</string>
     <string name="txtStatistikk">Se statistikk</string>
     <string name="txtPreferanser">Preferanser</string>
+
+    <string name="txtVelgAntall">Velg hvor mange oppgaver du vil ha per spill.</string>
+    <string name="box5Oppg">5 Oppgaver</string>
+    <string name="box10Oppg">10 Oppgaver</string>
+    <string name="box25Oppg">25 Oppgaver</string>
+
+    <string name="txtVelgSprok">Velg språk</string>
+    <string name="boxNorsk">Norsk</string>
+    <string name="boxTysk">Tysk</string>
 </resources>
