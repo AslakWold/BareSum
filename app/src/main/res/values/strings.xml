@@ -12,8 +12,9 @@
     <string name="box25Oppg">25 Oppgaver</string>
 
     <string name="txtVelgSprok">Velg språk</string>
-    <string name="boxNorsk">Norsk</string>
-    <string name="boxTysk">Tysk</string>
+    <string name="sprok">Tysk</string>
+
+
 
     <!-- Dialog -->
 

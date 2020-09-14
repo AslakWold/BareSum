@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.SwitchPreference;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,8 @@ import android.widget.Button;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+
+   // private SwitchPreference switch_preference_sprok;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnPreferanser(View v) {
-
+        Intent intent = new Intent(this, SetPreferencesActivity.class);
+        startActivity(intent);
     }
 
     public void btnSeStatistikk(View v) {

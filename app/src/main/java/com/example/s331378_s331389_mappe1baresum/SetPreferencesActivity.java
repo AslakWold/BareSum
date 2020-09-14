@@ -4,11 +4,16 @@ import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 
-public class PreferanserActivity extends PreferenceActivity {
+public class SetPreferencesActivity extends PreferenceActivity {
 
-    /*@Override
+    @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        getFragmentManager().beginTransaction().replace(android.R.id.content, new PreferenceFragment().commit;
-    }*/
+        getFragmentManager().beginTransaction().replace(android.R.id.content, new PrefsFragment()).commit();
+
+    }
+
+
+
+
 }
