@@ -34,11 +34,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnPreferanser"
+        android:id="@+id/btnSeStatistikk"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:background="#3D9FE1"
-        android:onClick="btnPreferanser"
+        android:onClick="btnSeStatistikk"
         android:text="@string/txtStatistikk"
         android:textColor="#FBFBFB"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -47,11 +47,11 @@
         app:layout_constraintTop_toTopOf="@id/btnStartSpill" />
 
     <Button
-        android:id="@+id/btnSeStatistikk"
+        android:id="@+id/btnPreferanser"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:background="#3D9FE1"
-        android:onClick="btnSeStatistikk"
+        android:onClick="btnPreferanser"
         android:text="@string/txtPreferanser"
         android:textColor="#FBFBFB"
         app:layout_constraintBottom_toBottomOf="parent"
