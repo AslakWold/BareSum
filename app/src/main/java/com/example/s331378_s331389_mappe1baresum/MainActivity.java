@@ -15,12 +15,13 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-   // private SwitchPreference switch_preference_sprok;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
     }
 
