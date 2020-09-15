@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="@string/txtVelgSprok">
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="switch_preference_språk"
-            android:title="@string/sprok" />
-    </PreferenceCategory>
-    <PreferenceCategory android:title="@string/txtVelgAntall">
-
-        <SwitchPreference
-            android:defaultValue="false"
-            android:key="switch_preference_5"
-            android:title="@string/box5Oppg" />
-
-    </PreferenceCategory>
-
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/altSprok"
+        android:entryValues="@array/altSprokrValues"
+        android:key="listSprok"
+        android:title="@string/txtVelgSprok" />
+    <ListPreference
+        android:defaultValue="1"
+        android:entries="@array/altOppgaver"
+        android:entryValues="@array/altOppgaverValues"
+        android:key="listAntallOppgaver"
+        android:title="@string/txtVelgAntall" />
 
 </PreferenceScreen>
