@@ -3,9 +3,11 @@ package com.example.s331378_s331389_mappe1baresum;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -15,14 +17,25 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String listSprok = "listSprok";
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        lesPref();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        PreferenceManager.setDefaultValues(this,R.xml.preferences,false);
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        lesPref();
+        super.onResume();
     }
 
     public void btnStartSpill(View v) {
@@ -45,17 +58,38 @@ public class MainActivity extends AppCompatActivity {
         Resources res = getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
         Configuration cf = res.getConfiguration();
-        cf.setLocale(new Locale(landskode));
-        res.updateConfiguration(cf, dm);
+        Locale ny = new Locale((landskode));
+        Locale curr = getResources().getConfiguration().locale;
+
+        if(!curr.equals(ny)){
+            cf.setLocale(ny);
+            res.updateConfiguration(cf, dm);
+            recreate();
+        }
     }
 
-    public void tysk(View v) {
+    public void tysk() {
         settland("de");
-        recreate();
+        //recreate();
     }
 
-    public void norsk(View v) {
+    public void norsk() {
         settland("no");
-        recreate();
+        //recreate();
     } //endring av språk
+
+    public void lesPref(){
+        System.out.println("JADA");
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        System.out.println("Hit");
+        String value = sp.getString(listSprok, "0");
+        System.out.println(value);
+        if(value.equals("1")){
+            settland("no");
+        }else{
+            settland("de");
+        }
+        System.out.println("Hit da");
+        //recreate();
+    }
 }
