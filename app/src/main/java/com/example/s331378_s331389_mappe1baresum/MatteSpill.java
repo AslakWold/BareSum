@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class MatteSpill {
 
     int antall_oppgaver;
-    int antallRiktige;
+    int antall_riktige;
     String [] svar;
     String [] oppgaver;
 
@@ -16,7 +16,7 @@ public class MatteSpill {
         svar = getSvar(oppgaverOgSvar);
         oppgaver = getOppgaver(oppgaverOgSvar);
 
-        antallRiktige = 0;
+        antall_riktige = 0;
     }
 
     public static String[] giOppgaver(int antOppg, String [] alle_oppgaver){
@@ -24,9 +24,7 @@ public class MatteSpill {
         int nr;
         String [] utOppgaver = new String[antOppg];
         int [] brukteOppg = new int[antOppg];
-        boolean exists = false;
-
-
+        boolean exists;
 
         for(int i = 0; i < antOppg; i++){
             exists = false;
@@ -50,6 +48,8 @@ public class MatteSpill {
         return utOppgaver;
     }
 
+
+
     public static String [] getOppgaver(String [] oppgaverOgSvar){
         String [] oppgaver = new String[oppgaverOgSvar.length];
 
@@ -60,6 +60,8 @@ public class MatteSpill {
 
         return oppgaver;
     }
+
+
 
     public static String [] getSvar(String [] oppgaverOgSvar){
         String [] svar = new String[oppgaverOgSvar.length];
