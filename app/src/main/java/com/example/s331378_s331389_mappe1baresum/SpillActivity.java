@@ -10,18 +10,54 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SpillActivity extends AppCompatActivity {
 
-    String [] oppgaverOgSvar;
-    int antallOppgaver;
-    int antRiktige;
+    MatteSpill etSpill;
+
 
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spill);
-
         Resources res = getResources();
-        oppgaverOgSvar = res.getStringArray(R.array.matteoppgaver);
-        String [] utOppgaver = MatteSpill.giOppgaver(oppgaverOgSvar,antallOppgaver);
+
+
+
+    }
+
+    public void btnEn(View v) {
+
+    }
+    public void btnTo(View v) {
+
+    }
+    public void btnTre(View v) {
+
+    }
+    public void btnFire(View v) {
+
+    }
+    public void btnFem(View v) {
+
+    }
+    public void btnSeks(View v) {
+
+    }
+    public void btnSju(View v) {
+
+    }
+    public void btnOtte(View v) {
+
+    }
+    public void btnNi(View v) {
+
+    }
+    public void btnNull(View v) {
+
+    }
+    public void btnFjern(View v) {
+
+    }
+    public void btnLever(View v) {
+
     }
 
 

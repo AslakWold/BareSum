@@ -19,8 +19,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String listSprok = "listSprok";
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         lesPref();
@@ -31,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
 
     @Override
     protected void onResume() {
@@ -79,9 +79,7 @@ public class MainActivity extends AppCompatActivity {
     } //endring av språk
 
     public void lesPref(){
-        System.out.println("JADA");
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        System.out.println("Hit");
         String value = sp.getString(listSprok, "0");
         System.out.println(value);
         if(value.equals("1")){
@@ -89,7 +87,5 @@ public class MainActivity extends AppCompatActivity {
         }else{
             settland("de");
         }
-        System.out.println("Hit da");
-        //recreate();
     }
 }

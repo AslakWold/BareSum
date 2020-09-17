@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
         <string-array name="altSprok">
-            <item>Norsk</item>
-            <item>Tysk</item>
+            <item>@string/optNorsk</item>
+            <item>@string/optTysk</item>
         </string-array>
 
     <string-array name="altSprokrValues">

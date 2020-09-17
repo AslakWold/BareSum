@@ -5,7 +5,21 @@ import java.util.ArrayList;
 
 public class MatteSpill {
 
-    public static String[] giOppgaver(String [] oppgaver, int antOppg){
+    int antall_oppgaver;
+    int antallRiktige;
+    String [] svar;
+    String [] oppgaver;
+
+    public MatteSpill(int antall_oppgaver, String [] alle_oppgaver){
+        this.antall_oppgaver = antall_oppgaver;
+        String [] oppgaverOgSvar=giOppgaver(antall_oppgaver,alle_oppgaver);
+        svar = getSvar(oppgaverOgSvar);
+        oppgaver = getOppgaver(oppgaverOgSvar);
+
+        antallRiktige = 0;
+    }
+
+    public static String[] giOppgaver(int antOppg, String [] alle_oppgaver){
 
         int nr;
         String [] utOppgaver = new String[antOppg];
@@ -26,7 +40,7 @@ public class MatteSpill {
             }
 
             if(!exists){
-                utOppgaver[i] = oppgaver [nr];
+                utOppgaver[i] = alle_oppgaver[nr];
             }else{
                 i--;
             }
@@ -36,14 +50,25 @@ public class MatteSpill {
         return utOppgaver;
     }
 
-    public static void splittOppgaver(String [] oppgaverOgSvar, String [] oppgaver, String [] svar){
-        oppgaver = new String[oppgaverOgSvar.length];
-        svar = new String[oppgaverOgSvar.length];
+    public static String [] getOppgaver(String [] oppgaverOgSvar){
+        String [] oppgaver = new String[oppgaverOgSvar.length];
 
         for(int i = 0; i < oppgaverOgSvar.length; i++){
             String [] split = oppgaverOgSvar[i].split("=",2);
-            oppgaver[i]=split[0];
+            oppgaver[i] = split[0];
+        }
+
+        return oppgaver;
+    }
+
+    public static String [] getSvar(String [] oppgaverOgSvar){
+        String [] svar = new String[oppgaverOgSvar.length];
+
+        for(int i = 0; i < oppgaverOgSvar.length; i++){
+            String [] split = oppgaverOgSvar[i].split("=",2);
             svar[i]=split[1];
         }
+
+        return svar;
     }
 }

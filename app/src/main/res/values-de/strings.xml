@@ -12,7 +12,8 @@
     <string name="box25Oppg">25 Aufgaben</string>
 
     <string name="txtVelgSprok">Wähle deine Sprache</string>
-    <string name="sprok">Norwegish</string>
+    <string name="optNorsk">Norwegish</string>
+    <string name="optTysk">Deutsh</string>
 
 
     <!-- Dialog -->

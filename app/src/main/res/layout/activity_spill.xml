@@ -12,9 +12,6 @@
         android:id="@+id/toolbar"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="1dp"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -24,14 +21,130 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/oppgaveVisning"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="253dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/txtOppgaver"
+        android:layout_width="206dp"
+        android:layout_height="100dp"
+        android:text="Oppgave"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <TextView
+        android:id="@+id/txtSvar"
+        android:layout_width="206dp"
+        android:layout_height="100dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/txtOppgaver"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <Button
+        android:id="@+id/btnEn"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:text="1"
+        app:layout_constraintEnd_toStartOf="@+id/btnTo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtOppgaver"
+        android:onClick="btnEn"/>
+
+    <Button
+        android:id="@+id/btnTo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:text="2"
+        app:layout_constraintStart_toEndOf="@+id/btnEn"
+        app:layout_constraintTop_toBottomOf="@+id/txtOppgaver"
+        android:onClick="btnTo"/>
+
+    <Button
+        android:id="@+id/btnTre"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:text="3"
+        app:layout_constraintStart_toEndOf="@+id/btnTo"
+        app:layout_constraintTop_toBottomOf="@+id/txtOppgaver"
+        android:onClick="btnTre"/>
+
+    <Button
+        android:id="@+id/btnFire"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:text="4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnEn"
+        android:onClick="btnFire"/>
+
+    <Button
+        android:id="@+id/btnFem"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:text="5"
+        app:layout_constraintStart_toEndOf="@+id/btnFire"
+        app:layout_constraintTop_toBottomOf="@+id/btnTo"
+        android:onClick="btnFem"/>
+
+    <Button
+        android:id="@+id/btnSeks"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:text="6"
+        app:layout_constraintStart_toEndOf="@+id/btnFem"
+        app:layout_constraintTop_toBottomOf="@+id/btnTre"
+        android:onClick="btnSeks"/>
+
+    <Button
+        android:id="@+id/btnSju"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:text="7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFire"
+        android:onClick="btnSju"/>
+
+    <Button
+        android:id="@+id/btnOtte"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:text="8"
+        app:layout_constraintStart_toEndOf="@+id/btnSju"
+
+        app:layout_constraintTop_toBottomOf="@+id/btnFem"
+        android:onClick="btnOtte"/>
+
+    <Button
+        android:id="@+id/btnNi"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:text="9"
+        app:layout_constraintStart_toEndOf="@+id/btnOtte"
+        app:layout_constraintTop_toBottomOf="@+id/btnSeks"
+        android:onClick="btnNi"/>
+
+    <Button
+        android:id="@+id/btnNull"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="80dp"
+        android:text="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnOtte"
+        android:onClick="btnNull"/>
+
+    <Button
+        android:id="@+id/btnFjern"
+        android:layout_width="160dp"
+        android:layout_height="80dp"
+        android:text="Tilbake"
+        app:layout_constraintStart_toEndOf="@+id/btnTre"
+        app:layout_constraintTop_toBottomOf="@+id/txtOppgaver"
+        android:onClick="btnFjern"/>
+
+    <Button
+        android:id="@+id/btnLever"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:text="LEVER OPPGAVE"
+        app:layout_constraintStart_toEndOf="@+id/btnNi"
+        app:layout_constraintTop_toBottomOf="@+id/btnFjern"
+        android:onClick="btnLever"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

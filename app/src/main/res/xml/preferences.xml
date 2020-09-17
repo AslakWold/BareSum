@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="prefScreen">
     <ListPreference
         android:defaultValue="1"
         android:entries="@array/altSprok"
         android:entryValues="@array/altSprokrValues"
         android:key="listSprok"
         android:title="@string/txtVelgSprok" />
+
     <ListPreference
         android:defaultValue="1"
         android:entries="@array/altOppgaver"
