@@ -2,18 +2,25 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:key="prefScreen">
-    <ListPreference
-        android:defaultValue="1"
-        android:entries="@array/altSprok"
-        android:entryValues="@array/altSprokrValues"
-        android:key="listSprok"
-        android:title="@string/txtVelgSprok" />
+    <PreferenceCategory android:title="@string/sprok">
 
-    <ListPreference
-        android:defaultValue="false"
-        android:entries="@array/altOppgaver"
-        android:entryValues="@array/altOppgaverValues"
-        android:key="listAntallOppgaver"
-        android:title="@string/txtVelgAntall" />
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/altSprok"
+            android:entryValues="@array/altSprokrValues"
+            android:key="listSprok"
+            android:title="@string/txtVelgSprok" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/antallOppgaver">
+
+        <ListPreference
+            android:defaultValue="false"
+            android:entries="@array/altOppgaver"
+            android:entryValues="@array/altOppgaverValues"
+            android:key="listAntallOppgaver"
+            android:title="@string/txtVelgAntall" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

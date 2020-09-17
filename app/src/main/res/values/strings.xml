@@ -6,14 +6,18 @@
 
     <!-- Preferanser -->
 
+    <string name="antallOppgaver">Antall Oppgaver</string>
     <string name="txtVelgAntall">Velg hvor mange oppgaver du vil ha per spill.</string>
     <string name="box5Oppg">5 Oppgaver</string>
     <string name="box10Oppg">10 Oppgaver</string>
     <string name="box25Oppg">25 Oppgaver</string>
 
+    <!-- Språk -->
+
     <string name="txtVelgSprok">Velg språk</string>
     <string name="optNorsk">Norsk</string>
     <string name="optTysk">Tysk</string>
+    <string name="sprok">Språk</string>
 
 
 
@@ -21,5 +25,10 @@
 
     <string name="Avslutt">Avslutt</string>
     <string name="Avbryt">Avbryt</string>
+
+    <!-- Spill -->
+
+    <string name="fjernSvar">Fjern</string>
+    <string name="leverSvar">Lever</string>
 
 </resources>
