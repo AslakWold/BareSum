@@ -24,7 +24,7 @@
         android:id="@+id/txtOppgaver"
         android:layout_width="206dp"
         android:layout_height="100dp"
-        android:text="Oppgave"
+        android:text=""
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
@@ -32,7 +32,7 @@
         android:id="@+id/txtSvar"
         android:layout_width="206dp"
         android:layout_height="100dp"
-        android:text="TextView"
+        android:text=""
         app:layout_constraintStart_toEndOf="@+id/txtOppgaver"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
