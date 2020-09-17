@@ -83,9 +83,9 @@ public class MainActivity extends AppCompatActivity {
         String value = sp.getString(listSprok, "0");
         System.out.println(value);
         if(value.equals("1")){
-            settland("no");
+            norsk();
         }else{
-            settland("de");
+            tysk();
         }
     }
 }

@@ -9,7 +9,7 @@
         android:title="@string/txtVelgSprok" />
 
     <ListPreference
-        android:defaultValue="1"
+        android:defaultValue="false"
         android:entries="@array/altOppgaver"
         android:entryValues="@array/altOppgaverValues"
         android:key="listAntallOppgaver"

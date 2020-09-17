@@ -23,6 +23,7 @@ import android.preference.SwitchPreference;
 import android.transition.Scene;
 import android.transition.TransitionManager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 
 
 import androidx.annotation.NonNull;
@@ -46,116 +47,16 @@ public class SetPreferencesActivity extends PreferenceActivity{
         String value = sp.getString(listSprok, "0");
         System.out.println(value);
         if(value.equals("1")){
-            settland("no");
+            norsk();
         }else{
-            settland("de");
+            tysk();
         }
 
         super.onCreate(savedInstanceState);
         PrefsFragment prefsFragment = new PrefsFragment();
         getFragmentManager().beginTransaction().replace(android.R.id.content, prefsFragment).commit();
 
-        preferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-                if(s.equals(listSprok)){
-                    String value = sharedPreferences.getString(s,"");
-                    System.out.println(value+" AJJAJAJJAJAJAJJAJ");
-                    if(value.equals(1)){
-                        settland("no");
-                        recreate();
-                    }
-                    if(value.equals(2)) {
-                        settland("de");
-                        recreate();
-                    }
-                }
-
-
-            }
-        };
     }
-
-    @Override
-    protected void onResume() {
-        System.out.println("RESUME");
-        super.onResume();
-
-
-    }
-
-
-    @Override
-    protected void onStop() {
-        System.out.println("STOP");
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        System.out.println("DESTROY");
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        System.out.println("ONSAVEONSTANCESTATE");
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle state) {
-        System.out.println("ONRESTOREINSTAANCESTATE");
-        super.onRestoreInstanceState(state);
-    }
-
-
-    @Override
-    public void onContentChanged() {
-        System.out.println("onContentChanged");
-        super.onContentChanged();
-
-    }
-
-
-    @Override
-    public Intent onBuildStartFragmentIntent(String fragmentName, Bundle args, int titleRes, int shortTitleRes) {
-        System.out.println("onBuildStartFragmentIntent");
-        return super.onBuildStartFragmentIntent(fragmentName, args, titleRes, shortTitleRes);
-    }
-
-    @Override
-    public void startWithFragment(String fragmentName, Bundle args, Fragment resultTo, int resultRequestCode) {
-        System.out.println("startwithfragment1");
-        super.startWithFragment(fragmentName, args, resultTo, resultRequestCode);
-    }
-
-    @Override
-    public void startWithFragment(String fragmentName, Bundle args, Fragment resultTo, int resultRequestCode, int titleRes, int shortTitleRes) {
-        System.out.println("startwithfragment2");
-        super.startWithFragment(fragmentName, args, resultTo, resultRequestCode, titleRes, shortTitleRes);
-    }
-
-
-    @Override
-    public boolean onPreferenceStartFragment(PreferenceFragment caller, Preference pref) {
-        System.out.println("onpreferencestartfragment");
-        return super.onPreferenceStartFragment(caller, pref);
-    }
-
-
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
-    }
-
-
-
-
-
-
-
-
 
     public void settland(String landskode) {
         Resources res = getResources();
@@ -169,17 +70,19 @@ public class SetPreferencesActivity extends PreferenceActivity{
             res.updateConfiguration(cf, dm);
             recreate();
         }
+
+
+    } //Settland
+
+    public void tysk() {
+        settland("de");
+        //recreate();
     }
-    public void lesPref(){
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        String value = sp.getString(listSprok, "0");
-        System.out.println(value);
-        if(value.equals("1")){
-            settland("no");
-        }else{
-            settland("de");
-        }
-    }
+
+    public void norsk() {
+        settland("no");
+        //recreate();
+    } //endring av språk
 
 
 
@@ -197,50 +100,30 @@ public class SetPreferencesActivity extends PreferenceActivity{
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.preferences);
 
-
-
             preferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
 
                 @Override
                 public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-                    Preference pref_sprok = findPreference(PREF_SPROK);
-                    Preference pref_ant = findPreference(PREF_ANTALL);
-                    if(s.equals(listSprok)){
-                        String value = sharedPreferences.getString(s,"");
-                        System.out.println(value+" AJJAJAJJAJAJAJJAJ");
-                        if(value.equals("1")){
-                            settland("no");
-                            //pref_sprok.setTitle("VELG SPRÅK");
-                            //System.out.println(pref_sprok.getTitle());
-                            //pref_ant.setTitle("VELGANTALL OPPGAVER");
-                        }
-                        if(value.equals("2")) {
-                            settland("de");
-                            //pref_sprok.setTitle("WEHLE SPRACHEN");
-                            //pref_ant.setTitle("WEHLE VIELE AUFGABEN");
-                        }
                         getActivity().recreate();
                     }
-
-
-                }
-            };
+                };
 
         }
 
-        @Override
+       @Override
         public void onResume() {
             super.onResume();
             getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(preferenceChangeListener);
-
+            Log.d("TAG", "Er i onResume");
         }
 
-        @Override
+       @Override
         public void onPause() {
             super.onPause();
             getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
+            Log.d("TAG", "Er i onPause");
         }
-        public void settland(String landskode) {
+       /* public void settland(String landskode) {
             Resources res = getResources();
             DisplayMetrics dm = res.getDisplayMetrics();
             Configuration cf = res.getConfiguration();
@@ -251,19 +134,10 @@ public class SetPreferencesActivity extends PreferenceActivity{
                 cf.setLocale(ny);
                 res.updateConfiguration(cf, dm);
             }
-        }
-    }
+        } //settland */
+    } //PrefsFragment end
 
 
-}
+} //SetPreferencesActivity End
 
 
-    /*public static   class  PrefsFragment extends PreferenceFragment {
-
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.preferences);
-        }
-
-    }
-*/
