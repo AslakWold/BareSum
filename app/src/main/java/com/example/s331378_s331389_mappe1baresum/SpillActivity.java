@@ -1,30 +1,63 @@
 package com.example.s331378_s331389_mappe1baresum;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class SpillActivity extends AppCompatActivity {
 
+    public static final String LIST_ALT_OPPGAVER = "listAntallOppgaver";
     MatteSpill etSpill;
     TextView txtOppgaver;
     TextView txtSvar;
-
+    int antall_oppgaver;
+    int first;
+    int teller;
+    String [] alle_oppgaver;
+    String [] oppgaver;
+    String [] svar;
+    ArrayList<String> oppgaverStatistikk;
 
 
     protected void onCreate(Bundle savedInstanceState){
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        String value = sp.getString(LIST_ALT_OPPGAVER, "0");
+        System.out.println(value);
+        if(value.equals("1")){
+            antall_oppgaver = 5;
+        }else if(value.equals("2")){
+            antall_oppgaver = 10;
+        }else{
+            antall_oppgaver = 25;
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spill);
         Resources res = getResources();
-
         txtOppgaver = findViewById(R.id.txtOppgaver);
         txtSvar = findViewById(R.id.txtSvar);
-    }
 
+        alle_oppgaver=getResources().getStringArray(R.array.matteoppgaver);
+        etSpill = new MatteSpill(antall_oppgaver,alle_oppgaver);
+
+        oppgaver = etSpill.getOppgaver();
+        svar = etSpill.getSvar();
+
+        teller = 0;
+        first = 0;
+
+        txtOppgaver.setText(oppgaver[teller]);
+
+
+    }
     public void btnEn(View v) {
         skrivInn(1);
     }
@@ -58,63 +91,61 @@ public class SpillActivity extends AppCompatActivity {
 
 
     public void btnFjern(View v) {
+
+
         String svar = (String)txtSvar.getText();
         String nyttSvar = "";
         char [] cSvar = svar.toCharArray();
-        for(int i = 0;i < cSvar.length-2;i++){
+        for(int i = 0;i < cSvar.length-1;i++){
             nyttSvar+=cSvar[i];
+        }
+        txtSvar.setText(nyttSvar);
+    }
+
+
+    public void btnLever(View v) {
+        String riktig_svar = (String)txtSvar.getText();
+        String input_svar = svar[teller];
+        if(teller+1 >= antall_oppgaver){
+            Intent i = getIntent();
+            ArrayList<String> oppgaverStatistikk = i.getStringArrayListExtra("statistikk");
+
+            System.out.println(oppgaverStatistikk.size() + "FAENFAENFAEN");
+            System.out.println(oppgaverStatistikk.get(0));
+            oppgaverStatistikk.add("12/12/12:"+etSpill.getAntall_riktige()+"/"+antall_oppgaver);
+
+
+            finish();
+        }else{
+            if(riktig_svar.equals(input_svar)){
+                etSpill.setAntall_riktige(etSpill.getAntall_riktige()+1);
+                txtSvar.setText(this.getString(R.string.riktig));
+
+            }else{
+                txtSvar.setText(this.getString(R.string.feil) + svar[teller]);
+            }
+            teller++;
+            txtOppgaver.setText(oppgaver[teller]);
+
+            first = 0;
         }
 
 
-    }
-    public void btnLever(View v) {
 
     }
 
     public void skrivInn(int tall){
-        String svar = (String)txtSvar.getText();
-        svar+=tall;
-        txtSvar.setText(svar);
-    }
 
-
-
-
-
-    public void leggInnVerdi(TextView tv, int verdi){
-        String gmlVerdi = (String)tv.getText();
-        
-        if(gmlVerdi!=null) {
-            tv.setText(gmlVerdi + verdi);
+        if(first != 0){
+            String svar = (String)txtSvar.getText();
+            svar+=tall;
+            txtSvar.setText(svar);
         }else{
-            tv.setText(verdi);
+            String svar = tall + "";
+            txtSvar.setText(svar);
+            first = 1;
         }
+
     }
-
-
-    //metode som fjerner siste tall i svarboksen
-
-    /*
-    //Må legge inn textview og knapp i "guiet".
-    public void btnfjern(View v){
-
-        TextView svar = (TextView)findViewById(R.id.txtSvar);
-
-        String gmlSvar = txtSvar.getText();
-        char [] nyttSvarArray = gmlSvar.toCharArray();
-        String nyttSvar = "";
-        for(int i = 0; i < nyttSvarArray.length - 1; i++){
-            nyttSvar+=nyttSvarArray[i];
-        }
-
-        txtSvar.setText(nyttSvar);
-
-
-    }*/
-
-
-    /*public void btnLeverOppgave(View v){
-
-    }*/
 
 }

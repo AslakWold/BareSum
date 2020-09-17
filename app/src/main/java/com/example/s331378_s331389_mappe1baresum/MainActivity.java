@@ -13,11 +13,14 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String listSprok = "listSprok";
+    public ArrayList <String> statistikk = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnStartSpill(View v) {
+        statistikk.add("KUKBAJS");
         Intent i = new Intent(this, SpillActivity.class);
+        i.putExtra("statistikk",statistikk);
         startActivity(i);
     }
 

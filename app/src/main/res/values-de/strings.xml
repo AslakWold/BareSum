@@ -20,6 +20,10 @@
     <string name="sprok">Sprache</string>
 
 
+    <string name="feil">Nicht ganz richtig :( Richtige Antwort ist  :</string>
+    <string name="riktig">Gute Arbeit, du hast richtig geantwortet !!!</string>
+
+
     <!-- Dialog -->
 
     <!-- Hvis man vil avbryte spill -->

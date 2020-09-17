@@ -20,6 +20,9 @@
     <string name="sprok">Språk</string>
 
 
+    <string name="feil">Ikke helt riktig det der :( Riktig svar er : </string>
+    <string name="riktig">Bra jobba du svarte riktig!!!</string>
+
 
     <!-- Dialog -->
 

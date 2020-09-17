@@ -1,8 +1,5 @@
 package com.example.s331378_s331389_mappe1baresum;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 public class MatteSpill {
 
     int antall_oppgaver;
@@ -13,10 +10,29 @@ public class MatteSpill {
     public MatteSpill(int antall_oppgaver, String [] alle_oppgaver){
         this.antall_oppgaver = antall_oppgaver;
         String [] oppgaverOgSvar=giOppgaver(antall_oppgaver,alle_oppgaver);
-        svar = getSvar(oppgaverOgSvar);
-        oppgaver = getOppgaver(oppgaverOgSvar);
+        svar = extractSvar(oppgaverOgSvar);
+        oppgaver = extractOppgaver(oppgaverOgSvar);
 
         antall_riktige = 0;
+
+    }
+
+
+    public void setAntall_riktige(int antall_riktige) {
+        this.antall_riktige = antall_riktige;
+    }
+
+    public int getAntall_riktige() {
+        return antall_riktige;
+    }
+
+
+    public String[] getSvar() {
+        return svar;
+    }
+
+    public String[] getOppgaver() {
+        return oppgaver;
     }
 
     public static String[] giOppgaver(int antOppg, String [] alle_oppgaver){
@@ -50,7 +66,7 @@ public class MatteSpill {
 
 
 
-    public static String [] getOppgaver(String [] oppgaverOgSvar){
+    public String [] extractOppgaver(String [] oppgaverOgSvar){
         String [] oppgaver = new String[oppgaverOgSvar.length];
 
         for(int i = 0; i < oppgaverOgSvar.length; i++){
@@ -63,7 +79,7 @@ public class MatteSpill {
 
 
 
-    public static String [] getSvar(String [] oppgaverOgSvar){
+    public String [] extractSvar(String [] oppgaverOgSvar){
         String [] svar = new String[oppgaverOgSvar.length];
 
         for(int i = 0; i < oppgaverOgSvar.length; i++){
