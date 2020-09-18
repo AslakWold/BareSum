@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
@@ -33,33 +35,58 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
 
     protected void onCreate(Bundle savedInstanceState){
 
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        String value = sp.getString(LIST_ALT_OPPGAVER, "0");
-        System.out.println(value);
-        if(value.equals("1")){
-            antall_oppgaver = 5;
-        }else if(value.equals("2")){
-            antall_oppgaver = 10;
-        }else{
-            antall_oppgaver = 25;
+
+
+
+
+
+        String besvarelse = "";
+        etSpill = new MatteSpill();
+
+        if(savedInstanceState!=null){
+            int riktige;
+            teller = savedInstanceState.getInt("teller");
+            antall_oppgaver =savedInstanceState.getInt("antall_oppgaver");
+            riktige = savedInstanceState.getInt("antall_riktige");
+            oppgaver = savedInstanceState.getStringArray("oppgaver");
+            svar = savedInstanceState.getStringArray("svar");
+            
+           besvarelse = savedInstanceState.getString("besvarelse");
+            etSpill.setAntall_riktige(riktige);
+        }else {
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+            String value = sp.getString(LIST_ALT_OPPGAVER, "0");
+            System.out.println(value);
+            if (value.equals("1")) {
+                antall_oppgaver = 5;
+            } else if (value.equals("2")) {
+                antall_oppgaver = 10;
+            } else {
+                antall_oppgaver = 25;
+            }
+
+            alle_oppgaver = getResources().getStringArray(R.array.matteoppgaver);
+            etSpill = new MatteSpill(antall_oppgaver, alle_oppgaver);
+
+            oppgaver = etSpill.getOppgaver();
+            svar = etSpill.getSvar();
+
+            teller = 0;
+            first = 0;
         }
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_spill);
+            txtOppgaver = findViewById(R.id.txtOppgaver);
+            txtSvar = findViewById(R.id.txtSvar);
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_spill);
-        Resources res = getResources();
-        txtOppgaver = findViewById(R.id.txtOppgaver);
-        txtSvar = findViewById(R.id.txtSvar);
+             txtOppgaver = findViewById(R.id.txtOppgaver);
+             txtSvar = findViewById(R.id.txtSvar);
 
-        alle_oppgaver=getResources().getStringArray(R.array.matteoppgaver);
-        etSpill = new MatteSpill(antall_oppgaver,alle_oppgaver);
 
-        oppgaver = etSpill.getOppgaver();
-        svar = etSpill.getSvar();
+             txtSvar.setText(besvarelse);
+            txtOppgaver.setText(oppgaver[teller]);
 
-        teller = 0;
-        first = 0;
 
-        txtOppgaver.setText(oppgaver[teller]);
 
         //Kode for tilbakeknapp
         spillToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -67,14 +94,40 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        txtOppgaver = findViewById(R.id.txtOppgaver);
+        txtSvar = findViewById(R.id.txtSvar);
+
+    }
+
+    public void  startApp(int saved_teller, int saved_antall_oppgaver, String [] saved_oppgaver, String [] saved_svar, MatteSpill saved_matteSpill){
+        teller = saved_teller;
+        antall_oppgaver = saved_antall_oppgaver;
+        etSpill = saved_matteSpill;
+        oppgaver = saved_oppgaver;
+        svar = saved_svar;
 
 
 
     }
 
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putInt("teller", teller);
+        savedInstanceState.putInt("antall_oppgaver",antall_oppgaver);
+        savedInstanceState.putInt("antall_riktige",etSpill.getAntall_riktige());
+        savedInstanceState.putStringArray("oppgaver",oppgaver);
+        savedInstanceState.putStringArray("svar",svar);
+        String besvarelse = (String)txtSvar.getText()  ;
+        savedInstanceState.putString("besvarelse", besvarelse);
+    }
+
+
+
     @Override   //tilbakeknapp i spillvinduet
     public boolean onSupportNavigateUp() {
+        //dialogAvslutt();
         onBackPressed();
         return true;
     }
@@ -114,15 +167,16 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
 
 
     public void btnFjern(View v) {
+        if(first==0){
 
-
+        } else{
         String svar = (String)txtSvar.getText();
         String nyttSvar = "";
         char [] cSvar = svar.toCharArray();
         for(int i = 0;i < cSvar.length-1;i++){
             nyttSvar+=cSvar[i];
         }
-        txtSvar.setText(nyttSvar);
+        txtSvar.setText(nyttSvar);    }
     }
 
 
@@ -177,6 +231,7 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
 
     @Override
     public void btnAvslutt() {
+        //onBackPressed();
         finish();
     }
 
@@ -195,7 +250,7 @@ public void  ferdigSpill(int RESULT){
         bundle.putStringArrayList("statistikk",statistikk);
         Intent intent = new Intent();
         intent.putExtras(bundle);
-        setResult(RESULT);
+        setResult(RESULT,intent);
         finish();
 
 

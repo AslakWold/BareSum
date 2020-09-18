@@ -8,6 +8,9 @@ public class MatteSpill {
     String [] oppgaver;
     long _ID;
 
+    public MatteSpill(){
+
+    }
     public MatteSpill(int antall_oppgaver, String [] alle_oppgaver){
         this.antall_oppgaver = antall_oppgaver;
         String [] oppgaverOgSvar=giOppgaver(antall_oppgaver,alle_oppgaver);
@@ -38,6 +41,22 @@ public class MatteSpill {
 
     public String[] getOppgaver() {
         return oppgaver;
+    }
+
+    public void setAntall_oppgaver(int antall_oppgaver) {
+        this.antall_oppgaver = antall_oppgaver;
+    }
+
+    public void setSvar(String[] svar) {
+        this.svar = svar;
+    }
+
+    public void setOppgaver(String[] oppgaver) {
+        this.oppgaver = oppgaver;
+    }
+
+    public void set_ID(long _ID) {
+        this._ID = _ID;
     }
 
     public static String[] giOppgaver(int antOppg, String [] alle_oppgaver){

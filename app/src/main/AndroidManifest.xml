@@ -28,7 +28,7 @@
         <activity android:name=".StatistikkActivity">
             <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+<activity name= ".YourActivity" android:configChanges="orientation|screenSize"/>
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter> -->
         </activity>
