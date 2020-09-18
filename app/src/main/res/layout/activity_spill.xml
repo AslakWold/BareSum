@@ -15,17 +15,20 @@
         android:layout_height="40dp"
         android:background="#3D9FE1"
         android:minHeight="?attr/actionBarSize"
+        android:textAlignment="gravity"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="#FBFBFB" />
+
 
     <TextView
         android:id="@+id/txtOppgaver"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="5 + 7 = ?"
+        tools:text="5 + 7 = ?"
         android:textAlignment="center"
         android:textColor="#FBFBFB"
         android:textSize="26sp"
@@ -40,7 +43,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="Her vil svar skrives inn"
+        tools:text="Her vil svar skrives inn"
         android:textAlignment="center"
         android:textColor="#FBFBFB"
         android:textSize="26sp"

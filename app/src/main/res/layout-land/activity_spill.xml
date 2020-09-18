@@ -12,10 +12,12 @@
         android:layout_height="40dp"
         android:background="#3D9FE1"
         android:minHeight="?attr/actionBarSize"
+        android:textAlignment="gravity"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="#FBFBFB" />
 
     <TextView
         android:id="@+id/txtOppgaver"

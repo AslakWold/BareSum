@@ -1,6 +1,7 @@
 package com.example.s331378_s331389_mappe1baresum;
 
 
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.LocusId;
@@ -28,6 +29,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 
 import java.util.List;
 import java.util.Locale;
@@ -38,6 +40,7 @@ public class SetPreferencesActivity extends PreferenceActivity{
 
     public static final String listSprok = "listSprok";
     private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
+
 
 
     @Override
@@ -57,6 +60,7 @@ public class SetPreferencesActivity extends PreferenceActivity{
         getFragmentManager().beginTransaction().replace(android.R.id.content, prefsFragment).commit();
 
     }
+
 
     public void settland(String landskode) {
         Resources res = getResources();

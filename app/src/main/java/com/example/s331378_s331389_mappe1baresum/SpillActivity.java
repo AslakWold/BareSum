@@ -6,9 +6,11 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 
@@ -25,6 +27,7 @@ public class SpillActivity extends AppCompatActivity {
     String [] oppgaver;
     String [] svar;
     ArrayList<String> oppgaverStatistikk;
+    Toolbar spillToolbar;
 
 
     protected void onCreate(Bundle savedInstanceState){
@@ -56,8 +59,26 @@ public class SpillActivity extends AppCompatActivity {
 
         txtOppgaver.setText(oppgaver[teller]);
 
+        //Kode for tilbakeknapp
+        spillToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(spillToolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
 
     }
+
+
+    @Override   //tilbakeknapp i spillvinduet
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+
+
     public void btnEn(View v) {
         skrivInn(1);
     }
