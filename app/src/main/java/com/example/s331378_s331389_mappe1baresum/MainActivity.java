@@ -1,5 +1,6 @@
 package com.example.s331378_s331389_mappe1baresum;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -43,9 +44,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void btnStartSpill(View v) {
         statistikk.add("KUKBAJS");
+        System.out.println(statistikk.get(0));
         Intent i = new Intent(this, SpillActivity.class);
-        i.putExtra("statistikk",statistikk);
-        startActivity(i);
+        i.putStringArrayListExtra("statistikk",statistikk);
+        startActivityForResult(i,420);
     }
 
     public void btnPreferanser(View v) {
@@ -54,7 +56,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnSeStatistikk(View v) {
-
+        Intent intent = new Intent(this, StatistikkActivity.class);
+        intent.putExtra("statistikk",statistikk);
+        startActivityForResult(intent,69);
     }
 
     //kode for endring av språk
@@ -92,5 +96,30 @@ public class MainActivity extends AppCompatActivity {
         }else{
             tysk();
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        System.out.println("NOCE");
+        if(requestCode==420){
+            if(resultCode==RESULT_CANCELED){
+                statistikk = data.getStringArrayListExtra("statistikk");
+            }if(resultCode==RESULT_OK){
+                statistikk = data.getStringArrayListExtra("statistikk");
+                Intent i = new Intent(this, SpillActivity.class);
+                startActivityForResult(i,420);
+            }
+
+        }if(requestCode==69){
+            if(resultCode==RESULT_OK){
+                statistikk = data.getStringArrayListExtra("StatFraSpill");
+                for(String element : statistikk){
+                    System.out.println(element);
+                }
+            }
+        }
+
+
     }
 }

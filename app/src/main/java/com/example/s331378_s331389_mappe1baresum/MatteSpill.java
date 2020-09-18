@@ -6,6 +6,7 @@ public class MatteSpill {
     int antall_riktige;
     String [] svar;
     String [] oppgaver;
+    long _ID;
 
     public MatteSpill(int antall_oppgaver, String [] alle_oppgaver){
         this.antall_oppgaver = antall_oppgaver;
@@ -26,6 +27,10 @@ public class MatteSpill {
         return antall_riktige;
     }
 
+
+    public long get_ID() {
+        return _ID;
+    }
 
     public String[] getSvar() {
         return svar;
@@ -51,6 +56,7 @@ public class MatteSpill {
                 if(nr == brukteOppg[j] && i!=j){
                     exists = true;
                 }
+
             }
 
             if(!exists){

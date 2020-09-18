@@ -11,10 +11,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 
 import java.util.ArrayList;
 
-public class SpillActivity extends AppCompatActivity {
+public class SpillActivity extends AppCompatActivity implements MyDialog.DialogClickListener,NyttSpillDialog.DialogListener{
 
     public static final String LIST_ALT_OPPGAVER = "listAntallOppgaver";
     MatteSpill etSpill;
@@ -42,6 +43,7 @@ public class SpillActivity extends AppCompatActivity {
         }else{
             antall_oppgaver = 25;
         }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spill);
         Resources res = getResources();
@@ -128,15 +130,7 @@ public class SpillActivity extends AppCompatActivity {
         String riktig_svar = (String)txtSvar.getText();
         String input_svar = svar[teller];
         if(teller+1 >= antall_oppgaver){
-            Intent i = getIntent();
-            ArrayList<String> oppgaverStatistikk = i.getStringArrayListExtra("statistikk");
-
-            System.out.println(oppgaverStatistikk.size() + "FAENFAENFAEN");
-            System.out.println(oppgaverStatistikk.get(0));
-            oppgaverStatistikk.add("12/12/12:"+etSpill.getAntall_riktige()+"/"+antall_oppgaver);
-
-
-            finish();
+            dialogFerdig();
         }else{
             if(riktig_svar.equals(input_svar)){
                 etSpill.setAntall_riktige(etSpill.getAntall_riktige()+1);
@@ -150,9 +144,6 @@ public class SpillActivity extends AppCompatActivity {
 
             first = 0;
         }
-
-
-
     }
 
     public void skrivInn(int tall){
@@ -169,4 +160,54 @@ public class SpillActivity extends AppCompatActivity {
 
     }
 
+    public void dialogAvslutt(){
+        DialogFragment dialogFragment = new MyDialog();
+        dialogFragment.show(getSupportFragmentManager(),"avslutt");
+    }
+
+    public void dialogFerdig(){
+        DialogFragment dialogFragment = new NyttSpillDialog();
+        dialogFragment.show(getSupportFragmentManager(),"nytt");
+    }
+
+    @Override
+    public void btnAvbryt() {
+        return;
+    }
+
+    @Override
+    public void btnAvslutt() {
+        finish();
+    }
+
+public void  ferdigSpill(int RESULT){
+
+        Intent i = getIntent();
+        ArrayList<String> statistikk = i.getStringArrayListExtra("statistikk");
+        String a = ("12/12/12:"+etSpill.getAntall_riktige()+"/"+antall_oppgaver);
+        statistikk.add(a);
+
+        for(String w : statistikk){
+            System.out.println(w);
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putStringArrayList("statistikk",statistikk);
+        Intent intent = new Intent();
+        intent.putExtras(bundle);
+        setResult(RESULT);
+        finish();
+
+
+    }
+
+    @Override
+    public void btnStartNytt() {
+        ferdigSpill(RESULT_OK);
+    }
+
+    @Override
+    public void btnTilbake() {
+        ferdigSpill(RESULT_CANCELED);
+    }
 }

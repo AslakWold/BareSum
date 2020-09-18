@@ -25,6 +25,13 @@
         </activity>
         <activity android:name=".SetPreferencesActivity">
         </activity>
+        <activity android:name=".StatistikkActivity">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter> -->
+        </activity>
     </application>
 
 </manifest>

@@ -27,8 +27,22 @@
     <!-- Dialog -->
 
     <!-- Hvis man vil avbryte spill -->
+    <string name="titleDialog1">Willst du das Spiel züchten? Das gestartete Spiel wird nicht gespeichert.</string>
     <string name="Avslutt">Fertig</string>
     <string name="Avbryt">Stornieren</string>
+
+
+    <string name="titleNyttSpillDialog">Möchten Sie zum Hauptbildschirm zurückkehren oder ein neues Spiel starten?</string>
+    <string name="startNytt">neues Spiel starten</string>
+    <string name="tilbake">Rückkehr</string>
+
+
+
+    <string name="id">ID</string>
+    <string name="dato">Datum</string>
+    <string name="riktige">Richtig</string>
+    <string name="antfeil">Fehl</string>
+    <string name="totalt">Anzahl der Aufagen</string>
 
     <!-- Spill -->
 

@@ -4,9 +4,9 @@
     <!-- Oppgaver -->
 
     <string-array name="altOppgaver">
-        <item>5 oppgaver</item>
-        <item>10 oppgaver</item>
-        <item>25 oppgaver</item>
+        <item>@string/box5Oppg</item>
+        <item>@string/box10Oppg</item>
+        <item>@string/box25Oppg</item>
     </string-array>
 
     <string-array name="altOppgaverValues">

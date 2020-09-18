@@ -24,14 +24,29 @@
     <string name="riktig">Bra jobba du svarte riktig!!!</string>
 
 
-    <!-- Dialog -->
+    <!-- Avslutt spill Dialog -->
 
+    <string name="titleDialog1">Vil du avlsutte spillet? Det påbegynte spillet vil ikke lagres.</string>
     <string name="Avslutt">Avslutt</string>
     <string name="Avbryt">Avbryt</string>
+
+    <!-- Nytt spill dialog -->
+    <string name="titleNyttSpillDialog">Vil  du gå tilbake til hovedskjermen eller starte nytt spill?</string>
+    <string name="startNytt">Start nytt spill</string>
+    <string name="tilbake">Gå tilbake</string>
+
+
+    <string name="id">ID</string>
+    <string name="dato">Dato</string>
+    <string name="riktige">Riktige</string>
+    <string name="antfeil">Feil</string>
+    <string name="totalt">antall oppgaver</string>
 
     <!-- Spill -->
 
     <string name="fjernSvar">Fjern</string>
     <string name="leverSvar">Lever</string>
+
+
 
 </resources>
