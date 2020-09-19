@@ -71,7 +71,7 @@ public class StatistikkActivity extends AppCompatActivity {
                     break;
                 }
             }catch(IllegalArgumentException e){
-                throw new IllegalArgumentException("Fant ikke ID");
+                throw new IllegalArgumentException("Blankspace");
             }
         }
 
