@@ -20,6 +20,7 @@ public class StatistikkActivity extends AppCompatActivity {
 
     public static String listSprok = "listSprok";
     TextView txtSpillList;
+    TextView txtResultater;
     EditText ID;
     String statistikk;
 
@@ -30,6 +31,7 @@ public class StatistikkActivity extends AppCompatActivity {
         setContentView(R.layout.activity_statistikk);
 
         txtSpillList = findViewById(R.id.txtSpillStat);
+        txtResultater = findViewById(R.id.txtResultater);
         ID = findViewById((R.id.etID));
 
 
@@ -43,13 +45,16 @@ public class StatistikkActivity extends AppCompatActivity {
 
         getStatistikk("statistikk");
 
-        txtSpillList.setText(spillList+statistikk);
+        txtSpillList.setText(spillList);
+        txtResultater.setText(statistikk);
+
 
     }
 
     public void btnSlettSpill(View view) {
 
         String id = ID.getText().toString();
+        try{
         int idSlett = Integer.parseInt(id);
 
         getStatistikk("statistikk");
@@ -58,18 +63,27 @@ public class StatistikkActivity extends AppCompatActivity {
 
         for(int i = 1; i< arrayListStat.size()+1; i++){
             String [] elementer = arrayListStat.get(i-1).split("\\s+");
-            int idSjekk = Integer.parseInt(elementer[0]);
+            try{
+                int idSjekk = Integer.parseInt(elementer[0]);
 
-            if(idSlett==idSjekk){
-                arrayListStat.remove(i-1);
-                break;
+                if(idSlett==idSjekk){
+                    arrayListStat.remove(i-1);
+                    break;
+                }
+            }catch(IllegalArgumentException e){
+                System.out.println("FEIL");
             }
+
         }
 
         statistikk = arraylistToString(arrayListStat);
 
-        txtSpillList.setText(statistikk);
+        txtResultater.setText(statistikk);
         saveStatistikk("statistikk");
+        }catch (IllegalArgumentException e){
+            String feilID = getResources().getString(R.string.feilID);
+            ID.setText(feilID);
+        }
 
         //finish();
     }

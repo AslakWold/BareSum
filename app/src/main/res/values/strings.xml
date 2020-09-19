@@ -46,7 +46,11 @@
 
     <string name="fjernSvar">Fjern</string>
     <string name="leverSvar">Lever</string>
+    <string name="ikkeNokOppgaver">Må gjenbruke oppgaver for nytt spill med</string>
+    <string name="oppgaver">oppgaver</string>
 
+    <string name="feilID">ID består kun av tall</string>
+    <string name="titleNyttSpillDialog"> hallo</string>
 
 
     <string name="slett">Slett med ID</string>

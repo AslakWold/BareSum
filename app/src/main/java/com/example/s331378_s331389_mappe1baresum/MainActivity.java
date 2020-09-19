@@ -23,16 +23,25 @@ public class MainActivity extends AppCompatActivity {
     public static final String listSprok = "listSprok";
     public String statistikk;
     public String ID;
+    public String alle_oppgaver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         lesPref();
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         PreferenceManager.setDefaultValues(this,R.xml.preferences,false);
+        //getStatistikk();
 
+        //saveStatistikk();
 
+        getAlleOppgaver();
+
+        String [] alleOppgaver = getResources().getStringArray(R.array.matteoppgaver);
+        alle_oppgaver = arrayToString(alleOppgaver);
+        saveAlleOppgaver();
 
     }
 
@@ -107,6 +116,27 @@ public class MainActivity extends AppCompatActivity {
     public void getStatistikk(){
         statistikk  = getSharedPreferences("PREFERENCE",MODE_PRIVATE).getString("statistikk","");
 
+    }
+
+    public void saveAlleOppgaver(){
+        getSharedPreferences("PREFERENCE",MODE_PRIVATE).edit().putString("alle_oppgaver",alle_oppgaver).apply();
+
+    }
+    public void getAlleOppgaver(){
+        alle_oppgaver  = getSharedPreferences("PREFERENCE",MODE_PRIVATE).getString("alle_oppgaver","");
+
+    }
+
+    public static String [] stringtoArray(String toArray){
+        String [] array = toArray.split("\n");
+        return array;
+    }
+    public static String arrayToString(String [] array){
+        String ut="";
+        for(String etSpill : array){
+            ut+=etSpill+"\n";
+        }
+        return ut;
     }
 
 

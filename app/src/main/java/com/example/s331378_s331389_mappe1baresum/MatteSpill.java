@@ -6,19 +6,18 @@ public class MatteSpill {
     int antall_riktige;
     String [] svar;
     String [] oppgaver;
-    long _ID;
+    String [] oppgaverOgSvar;
 
     public MatteSpill(){
 
     }
     public MatteSpill(int antall_oppgaver, String [] alle_oppgaver){
         this.antall_oppgaver = antall_oppgaver;
-        String [] oppgaverOgSvar=giOppgaver(antall_oppgaver,alle_oppgaver);
+        oppgaverOgSvar=giOppgaver(antall_oppgaver,alle_oppgaver);
         svar = extractSvar(oppgaverOgSvar);
         oppgaver = extractOppgaver(oppgaverOgSvar);
 
         antall_riktige = 0;
-
     }
 
 
@@ -30,17 +29,16 @@ public class MatteSpill {
         return antall_riktige;
     }
 
-
-    public long get_ID() {
-        return _ID;
-    }
-
     public String[] getSvar() {
         return svar;
     }
 
     public String[] getOppgaver() {
         return oppgaver;
+    }
+
+    public String[] getOppgaverOgSvar() {
+        return oppgaverOgSvar;
     }
 
     public void setAntall_oppgaver(int antall_oppgaver) {
@@ -53,10 +51,6 @@ public class MatteSpill {
 
     public void setOppgaver(String[] oppgaver) {
         this.oppgaver = oppgaver;
-    }
-
-    public void set_ID(long _ID) {
-        this._ID = _ID;
     }
 
     public static String[] giOppgaver(int antOppg, String [] alle_oppgaver){

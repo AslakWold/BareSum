@@ -44,6 +44,7 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
     String [] alle_oppgaver;
     String [] oppgaver;
     String [] svar;
+    String alleOppgaver;
     ArrayList<String> oppgaverStatistikk;
     Toolbar spillToolbar;
     String statistikk;
@@ -87,7 +88,9 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
             String statistikk = "";
             getSharedPreferences("Preference", MODE_PRIVATE).edit().putString("statistikk", statistikk).apply();
 
-            alle_oppgaver = getResources().getStringArray(R.array.matteoppgaver);
+            //alle_oppgaver = getResources().getStringArray(R.array.matteoppgaver);
+            getAlleOppgaver();
+            alle_oppgaver = stringtoArray(alleOppgaver,0);
             etSpill = new MatteSpill(antall_oppgaver, alle_oppgaver);
 
             oppgaver = etSpill.getOppgaver();
@@ -122,6 +125,9 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
     }
 
     public void startNyttSpill(){
+        for(String i : alle_oppgaver){
+            System.out.println(i);
+        }
         etSpill = new MatteSpill(antall_oppgaver,alle_oppgaver);
         teller = 0;
         first = 0;
@@ -218,16 +224,17 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
     public void btnLever(View v) {
         String riktig_svar = (String)txtSvar.getText();
         String input_svar = svar[teller];
+        String dialogTitle = getResources().getString(R.string.titleNyttSpillDialog);
 
         if(teller+1 >= antall_oppgaver){
             if(riktig_svar.equals(input_svar)) {
                 tellerRiktigeSvar++;
                 antallRiktigeSvar.setText(Integer.toString(tellerRiktigeSvar));
-                dialogFerdig();
+                dialogFerdig(dialogTitle);
             } else {
                 tellerFeilSvar++;
                 antallFeilSvar.setText(Integer.toString(tellerFeilSvar));
-                dialogFerdig();
+                dialogFerdig(dialogTitle);
             }
         }else {
 
@@ -269,8 +276,11 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
         dialogFragment.show(getSupportFragmentManager(),"avslutt");
     }
 
-    public void dialogFerdig(){
-        DialogFragment dialogFragment = new NyttSpillDialog();
+    public void dialogFerdig(String title){
+        DialogFragment dialogFragment = new NyttSpillDialog(title);
+        //char dialogTitle = title.charAt(0);
+        //dialogFragment.getDialog().setTitle(title);
+        
         dialogFragment.show(getSupportFragmentManager(),"nytt");
     }
 
@@ -285,9 +295,10 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
         finish();
     }
 
+    //Metode som lagrer det ferdige spillet til statistikken
+        //Starter enten nytt spill for bruker eller avslutter og går tilbake til hovedskjerm.
 public void  ferdigSpill(int RESULT){
 
-        String a = "ID : antall riktige : antall feil : totalt + \n";
         getStatistikk("statistikk");
         getID("ID");
 
@@ -297,13 +308,12 @@ public void  ferdigSpill(int RESULT){
         ID+=1;
         saveStatistikk("statistikk");
         saveID("ID");
+
         if(RESULT==RESULT_OK){
             startNyttSpill();
         }else{
             finish();
         }
-        System.out.println(statistikk);
-
     }
 
     @Override
@@ -318,20 +328,6 @@ public void  ferdigSpill(int RESULT){
 
     // DIALOG
 
-    public int genID(ArrayList<String>statistikk){
-        int nyID;
-        if(statistikk.size()==0){
-            nyID = 1;
-            return nyID;
-        }
-        String [] elementer = statistikk.get(statistikk.size()-1).split("\\s+");
-        System.out.println(elementer[0] + "ELEMENTER");
-        int nr = Integer.parseInt(elementer[0]);
-
-        nyID = nr+1;
-
-        return nyID;
-    }
 
     public void saveStatistikk(String PREF){
         getSharedPreferences("PREFERENCE",MODE_PRIVATE).edit().putString(PREF,statistikk).apply();
@@ -351,23 +347,34 @@ public void  ferdigSpill(int RESULT){
     }
 
 
-    public static ArrayList<String> stringtoArray(String toArray){
-        String [] array = toArray.split("\n");
-        System.out.println(array.length);
-        ArrayList<String> tmp = new ArrayList<>();
 
-        for(int i = 0;i<array.length;i++){
-            tmp.add(array[i]);
+    public void saveAlleOppgaver(){
+            getSharedPreferences("PREFERENCE",MODE_PRIVATE).edit().putString("alle_oppgaver",alleOppgaver).apply();
+
         }
-        return tmp;
-    }
-    public static String arraylistToString(ArrayList<String> arrayList){
-        String ut="";
-        for(String etSpill : arrayList){
-            ut+=etSpill+"\n";
+        public void getAlleOppgaver(){
+            alleOppgaver  = getSharedPreferences("PREFERENCE",MODE_PRIVATE).getString("alle_oppgaver","");
+
         }
-        return ut;
-    }
+
+        public static String [] stringtoArray(String toArray, int fjern){
+            String [] array = toArray.split("\n");
+              return array;
+        }
+
+        public static String arrayToString(String [] array){
+            String ut="";
+            for(String etSpill : array){
+                if(!etSpill.isEmpty()){
+                  ut+=etSpill+"\n";
+                }
+            }
+            return ut;
+        }
+
+
+
+
 
     //kode for endring av språk
 
