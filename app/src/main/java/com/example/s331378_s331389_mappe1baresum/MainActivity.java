@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
         /*statistikk = "";
         saveStatistikk();*/
 
-        if(statistikk==null){
+        /*if(statistikk==null){
             saveStatistikk();
-        }
+        }*/
 
     }
 
@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 statistikk = data.getStringArrayListExtra("statistikk");
 
             }
+
         }
 
 

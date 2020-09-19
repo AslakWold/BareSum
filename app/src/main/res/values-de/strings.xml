@@ -27,7 +27,7 @@
     <!-- Dialog -->
 
     <!-- Hvis man vil avbryte spill -->
-    <string name="titleDialog1">Willst du das Spiel züchten? Das gestartete Spiel wird nicht gespeichert.</string>
+    <string name="titleDialog1">Willst du das Spiel züchten?</string>
     <string name="Avslutt">Fertig</string>
     <string name="Avbryt">Stornieren</string>
 

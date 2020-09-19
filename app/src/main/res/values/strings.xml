@@ -26,7 +26,7 @@
 
     <!-- Avslutt spill Dialog -->
 
-    <string name="titleDialog1">Vil du avlsutte spillet? Det påbegynte spillet vil ikke lagres.</string>
+    <string name="titleDialog1">Vil du avlsutte spillet?</string>
     <string name="Avslutt">Avslutt</string>
     <string name="Avbryt">Avbryt</string>
 
