@@ -31,7 +31,7 @@ public class StatistikkActivity extends AppCompatActivity {
         String feil = getResources().getString(R.string.antfeil);
         String totalt = getResources().getString(R.string.totalt);
 
-        String spillList =  id + "  " + dato+ "   "+riktige+"   "+feil+"    "+totalt+"\n";
+        String spillList =  id + "\t" + riktige + "\t" + feil + "\t" + totalt + "\n";
 
         getStatistikk("statistikk");
 
