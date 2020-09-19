@@ -30,20 +30,21 @@
         android:id="@+id/etID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
+        android:layout_marginStart="150dp"
         android:layout_marginTop="100dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="ID"
+        android:inputType="text"
+        android:text=""
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
     <Button
-        android:id="@+id/button2"
+        android:onClick="btnSlettSpill"
+        android:id="@+id/btnSlett"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="101dp"
-        android:text="Button"
+        android:text="@string/slett"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 

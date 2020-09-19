@@ -16,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class SpillActivity extends AppCompatActivity implements MyDialog.DialogClickListener,NyttSpillDialog.DialogListener{
 
@@ -31,6 +32,8 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
     String [] svar;
     ArrayList<String> oppgaverStatistikk;
     Toolbar spillToolbar;
+    String statistikk;
+    public int ID;
 
 
     protected void onCreate(Bundle savedInstanceState){
@@ -64,6 +67,9 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
             } else {
                 antall_oppgaver = 25;
             }
+
+            String statistikk = "";
+            getSharedPreferences("Preference", MODE_PRIVATE).edit().putString("statistikk", statistikk).apply();
 
             alle_oppgaver = getResources().getStringArray(R.array.matteoppgaver);
             etSpill = new MatteSpill(antall_oppgaver, alle_oppgaver);
@@ -99,18 +105,16 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
 
     }
 
-    public void  startApp(int saved_teller, int saved_antall_oppgaver, String [] saved_oppgaver, String [] saved_svar, MatteSpill saved_matteSpill){
-        teller = saved_teller;
-        antall_oppgaver = saved_antall_oppgaver;
-        etSpill = saved_matteSpill;
-        oppgaver = saved_oppgaver;
-        svar = saved_svar;
 
-
-
+    public void startNyttSpill(){
+        etSpill = new MatteSpill(antall_oppgaver,alle_oppgaver);
+        teller = 0;
+        first = 0;
+        oppgaver = etSpill.getOppgaver();
+        svar = etSpill.getSvar();
+        txtSvar.setText("");
+        txtOppgaver.setText(oppgaver[teller]);
     }
-
-
     @Override
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
@@ -237,22 +241,22 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
 
 public void  ferdigSpill(int RESULT){
 
-        Intent i = getIntent();
-        ArrayList<String> statistikk = i.getStringArrayListExtra("statistikk");
-        String a = ("12/12/12:"+etSpill.getAntall_riktige()+"/"+antall_oppgaver);
-        statistikk.add(a);
+        String a = "ID : antall riktige : antall feil : totalt + \n";
+        getStatistikk("statistikk");
+        getID("ID");
 
-        for(String w : statistikk){
-            System.out.println(w);
+        int feil = antall_oppgaver - etSpill.getAntall_riktige();
+        String nyttSpill = ID + " : " + etSpill.getAntall_riktige() + " : " + feil + " : " + antall_oppgaver + "\n";
+        statistikk+=nyttSpill;
+        ID+=1;
+        saveStatistikk("statistikk");
+        saveID("ID");
+        if(RESULT==RESULT_OK){
+            startNyttSpill();
+        }else{
+            finish();
         }
-
-        Bundle bundle = new Bundle();
-        bundle.putStringArrayList("statistikk",statistikk);
-        Intent intent = new Intent();
-        intent.putExtras(bundle);
-        setResult(RESULT,intent);
-        finish();
-
+        System.out.println(statistikk);
 
     }
 
@@ -265,4 +269,57 @@ public void  ferdigSpill(int RESULT){
     public void btnTilbake() {
         ferdigSpill(RESULT_CANCELED);
     }
+
+    public int genID(ArrayList<String>statistikk){
+        int nyID;
+        if(statistikk.size()==0){
+            nyID = 1;
+            return nyID;
+        }
+        String [] elementer = statistikk.get(statistikk.size()-1).split("\\s+");
+        System.out.println(elementer[0] + "ELEMENTER");
+        int nr = Integer.parseInt(elementer[0]);
+
+        nyID = nr+1;
+
+        return nyID;
+    }
+
+    public void saveStatistikk(String PREF){
+        getSharedPreferences("PREFERENCE",MODE_PRIVATE).edit().putString(PREF,statistikk).apply();
+
+    }
+    public void getStatistikk(String PREF){
+        statistikk  = getSharedPreferences("PREFERENCE",MODE_PRIVATE).getString(PREF,"");
+    }
+
+
+    public void saveID(String PREF){                                                              
+        getSharedPreferences("PREFERENCE",MODE_PRIVATE).edit().putInt(PREF,ID).apply();
+
+    }
+    public void getID(String PREF){
+        ID  = getSharedPreferences("PREFERENCE",MODE_PRIVATE).getInt(PREF,0);
+    }
+
+
+    public static ArrayList<String> stringtoArray(String toArray){
+        String [] array = toArray.split("\n");
+        System.out.println(array.length);
+        ArrayList<String> tmp = new ArrayList<>();
+
+        for(int i = 0;i<array.length;i++){
+            tmp.add(array[i]);
+        }
+        return tmp;
+    }
+    public static String arraylistToString(ArrayList<String> arrayList){
+        String ut="";
+        for(String etSpill : arrayList){
+            ut+=etSpill+"\n";
+        }
+        return ut;
+    }
+
+
 }

@@ -21,7 +21,8 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     public static final String listSprok = "listSprok";
-    public ArrayList <String> statistikk = new ArrayList<>();
+    public String statistikk;
+    public String ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,13 @@ public class MainActivity extends AppCompatActivity {
 
         PreferenceManager.setDefaultValues(this,R.xml.preferences,false);
 
+
+        /*statistikk = "";
+        saveStatistikk();*/
+
+        if(statistikk==null){
+            saveStatistikk();
+        }
 
     }
 
@@ -43,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnStartSpill(View v) {
-        statistikk.add("KUKBAJS");
-        System.out.println(statistikk.get(0));
+        //statistikk.add("KUKBAJS");
+        //System.out.println(statistikk.get(0));
         Intent i = new Intent(this, SpillActivity.class);
-        i.putStringArrayListExtra("statistikk",statistikk);
+        //i.putStringArrayListExtra("statistikk",statistikk);
         startActivityForResult(i,420);
     }
 
@@ -98,7 +106,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
+    public void saveStatistikk(){
+        getSharedPreferences("PREFERENCE",MODE_PRIVATE).edit().putString("statistikk",statistikk).apply();
+
+    }
+    public void getStatistikk(){
+        statistikk  = getSharedPreferences("PREFERENCE",MODE_PRIVATE).getString("statistikk","");
+
+    }
+
+
+   /* @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         System.out.println("NOCE");
@@ -107,19 +125,21 @@ public class MainActivity extends AppCompatActivity {
                 statistikk = data.getStringArrayListExtra("statistikk");
             }if(resultCode==RESULT_OK){
                 statistikk = data.getStringArrayListExtra("statistikk");
+                for(String k : statistikk){
+                    System.out.println(k);
+                }
                 Intent i = new Intent(this, SpillActivity.class);
+                i.putStringArrayListExtra("statistikk",statistikk);
                 startActivityForResult(i,420);
             }
 
         }if(requestCode==69){
             if(resultCode==RESULT_OK){
-                statistikk = data.getStringArrayListExtra("StatFraSpill");
-                for(String element : statistikk){
-                    System.out.println(element);
-                }
+                statistikk = data.getStringArrayListExtra("statistikk");
+
             }
         }
 
 
-    }
+    }*/
 }
