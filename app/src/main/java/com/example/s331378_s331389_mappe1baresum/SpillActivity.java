@@ -137,8 +137,10 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
         savedInstanceState.putInt("antall_riktige",etSpill.getAntall_riktige());
         savedInstanceState.putStringArray("oppgaver",oppgaver);
         savedInstanceState.putStringArray("svar",svar);
+
         String besvarelse = (String)txtSvar.getText()  ;
         savedInstanceState.putString("besvarelse", besvarelse);
+
         String antallRiktigeSvarString = (String) antallRiktigeSvar.getText();
         String antallFeilSvarString = (String) antallFeilSvar.getText();
         savedInstanceState.putString("antallRiktigeSvar", antallRiktigeSvarString);
