@@ -1,6 +1,5 @@
 package com.example.s331378_s331389_mappe1baresum;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -20,7 +19,7 @@ public class StatistikkActivity extends AppCompatActivity {
 
     public static String listSprok = "listSprok";
     TextView txtSpillList;
-    TextView txtResultater;
+    TextView Resultater;
     EditText ID;
     String statistikk;
 
@@ -31,22 +30,23 @@ public class StatistikkActivity extends AppCompatActivity {
         setContentView(R.layout.activity_statistikk);
 
         txtSpillList = findViewById(R.id.txtSpillStat);
-        txtResultater = findViewById(R.id.txtResultater);
+        Resultater = findViewById(R.id.txtResultater);
         ID = findViewById((R.id.etID));
 
+        //Setter oversikt for hvilken verdi som er hvilken verdi
 
         String id = getResources().getString(R.string.id);
-        String dato = getResources().getString(R.string.dato);
         String riktige = getResources().getString(R.string.riktige);
         String feil = getResources().getString(R.string.antfeil);
         String totalt = getResources().getString(R.string.totalt);
 
         String spillList =  id + "\t" + riktige + "\t" + feil + "\t" + totalt + "\n";
 
+        //Henter statistikk og skriver til textviewet
         getStatistikk("statistikk");
 
         txtSpillList.setText(spillList);
-        txtResultater.setText(statistikk);
+        Resultater.setText(statistikk);
 
 
     }
@@ -78,14 +78,13 @@ public class StatistikkActivity extends AppCompatActivity {
 
         statistikk = arraylistToString(arrayListStat);
 
-        txtResultater.setText(statistikk);
+        Resultater.setText(statistikk);
         saveStatistikk("statistikk");
         }catch (IllegalArgumentException e){
             String feilID = getResources().getString(R.string.feilID);
             ID.setText(feilID);
         }
 
-        //finish();
     }
 
 
@@ -135,12 +134,10 @@ public class StatistikkActivity extends AppCompatActivity {
 
     public void tysk() {
         settland("de");
-        //recreate();
     }
 
     public void norsk() {
         settland("no");
-        //recreate();
     } //endring av språk
 
     public void lesPref(){

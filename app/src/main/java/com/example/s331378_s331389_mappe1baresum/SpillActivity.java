@@ -60,6 +60,8 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
         String antallFeilSvarString = "";
         etSpill = new MatteSpill();
 
+
+        //GJENOPPRETTER ved endring av tilstand
         if (savedInstanceState != null) {
             int riktige;
             teller = savedInstanceState.getInt("teller");
@@ -78,7 +80,9 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
         } else {
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
             String value = sp.getString(LIST_ALT_OPPGAVER, "0");
-            System.out.println(value);
+
+
+            //Finner alternativ valgt i preferences
             if (value.equals("1")) {
                 antall_oppgaver = 5;
             } else if (value.equals("2")) {
@@ -88,7 +92,7 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
             }
 
 
-            String statistikk = "";
+            //String statistikk = "";
             getSharedPreferences("Preference", MODE_PRIVATE).edit().putString("statistikk", statistikk).apply();
 
             //alle_oppgaver = getResources().getStringArray(R.array.matteoppgaver);
@@ -116,60 +120,10 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
         antallFeilSvar.setText(Integer.toString(tellerFeilSvar));
         antallRiktigeSvar.setText(antallRiktigeSvarString);
         antallFeilSvar.setText(antallFeilSvarString);
-
-        /*Kode for tilbakeknapp
-        spillToolbar = (Toolbar) findViewById(R.id.toolbar);
-        spillToolbar.setTitle("");
-        setSupportActionBar(spillToolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);*/
-    }
-
-    public void startNyttSpill(){
-        getAlleOppgaver();
-        alle_oppgaver =stringtoArray(alleOppgaver,0);
-        etSpill = new MatteSpill(antall_oppgaver,alle_oppgaver);
-        teller = 0;
-        first = 0;
-        tellerFeilSvar = 0;
-        tellerRiktigeSvar = 0;
-        antallRiktigeSvar.setText(Integer.toString(tellerRiktigeSvar));
-        antallFeilSvar.setText(Integer.toString(tellerFeilSvar));
-        oppgaver = etSpill.getOppgaver();
-        svar = etSpill.getSvar();
-        oppgaverOgSvar=etSpill.getOppgaverOgSvar();
-        txtSvar.setText("");
-        txtOppgaver.setText(oppgaver[teller]);
-    }
-
-   public boolean updateOppgaver(){
-        oppgaverOgSvar = etSpill.getOppgaverOgSvar() ;
-        String [] brukteOppgaver = oppgaverOgSvar;
-        String [] ubrukteOppgaver = alle_oppgaver;
-
-        for(int i = 0; i<brukteOppgaver.length;i++){
-            for(int j = i; j < ubrukteOppgaver.length; j++){
-               if(brukteOppgaver[i].equals(ubrukteOppgaver[j])){
-                   ubrukteOppgaver[i]="";
-               }
-            }
-        }
-        alleOppgaver = arrayToString(ubrukteOppgaver);
-        alle_oppgaver=stringtoArray(alleOppgaver,0);
-        alleOppgaver=arrayToString(alle_oppgaver);
-        saveAlleOppgaver();
-
-        if(alle_oppgaver.length<antall_oppgaver){
-          alle_oppgaver=getResources().getStringArray(R.array.matteoppgaver);
-          alleOppgaver=arrayToString(alle_oppgaver);
-          saveAlleOppgaver();
-          return false;
-        }
-        return true;
     }
 
 
+    //Lagrer verdiene slik at tilstanden bevares ved snudd skjeerm etc.
     @Override
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
@@ -192,21 +146,15 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
     }
 
 
-    /*
-    @Override   //tilbakeknapp i spillvinduet
-    public boolean onSupportNavigateUp() {
-        //dialogAvslutt();
-        onBackPressed();
-        return true;
-    } */
 
+    //BUTTONS ----->
 
-
-
+     //Spør om man vil avslutte spillet
     public void onBackPressed() {
         dialogAvslutt();
     }
 
+    //Legger inn gitt tall
     public void btnEn(View v) {
         skrivInn(1);
     }
@@ -238,6 +186,7 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
         skrivInn(0);
     }
 
+     //Fjerner deen siste verdien som er skrevet inn dersom det er skrevet inn noe
 
     public void btnFjern(View v) {
         if(first==0){
@@ -253,17 +202,13 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
     }
 
 
+        //Lever oppgave og dersom det er siste oppgave leverer spillet
     public void btnLever(View v) {
         String riktig_svar = (String)txtSvar.getText();
         String input_svar = svar[teller];
         String dialogTitle = getResources().getString(R.string.titleNyttSpillDialog);
 
         if(teller+1 >= antall_oppgaver){
-            /*if(!updateOppgaver()){
-                dialogTitle = getResources().getString(R.string.ikkeNokOppgaver);
-            }       */
-
-
             if(riktig_svar.equals(input_svar)) {
                 tellerRiktigeSvar++;
                 antallRiktigeSvar.setText(Integer.toString(tellerRiktigeSvar));
@@ -292,6 +237,85 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
         }
     }
 
+
+    //DIALOG
+
+
+    //Dialogboks for avsluttet spill uten å gjøre ferdig
+    public void dialogAvslutt(){
+        DialogFragment dialogFragment = new MyDialog();
+        dialogFragment.show(getSupportFragmentManager(),"avslutt");
+    }
+    @Override
+    public void btnAvbryt() {
+        return;
+    }
+    @Override
+    public void btnAvslutt() {
+        finish();
+    }
+
+
+    //Dialog boks for ferdig spill.
+        //Spør om det skal fortsettes
+    public void dialogFerdig(String title){
+        DialogFragment dialogFragment = new NyttSpillDialog(title);
+        dialogFragment.show(getSupportFragmentManager(),"nytt");
+    }
+
+    @Override
+    public void btnStartNytt() {
+        ferdigSpill(RESULT_OK);
+    }
+
+    @Override
+    public void btnTilbake() {
+        ferdigSpill(RESULT_CANCELED);
+    }
+
+
+
+    //Metode som lagrer det ferdige spillet til statistikken
+        //Starter enten nytt spill for bruker eller avslutter og går tilbake til hovedskjerm.
+    public void  ferdigSpill(int RESULT){
+
+        getStatistikk("statistikk");
+        getID("ID");
+        String nyttSpill = ID + "\t:\t " + tellerRiktigeSvar +
+                "\t:\t" + tellerFeilSvar + "\t:\t" + antall_oppgaver + "\n";
+
+        statistikk+=nyttSpill;
+        ID+=1;
+        saveStatistikk("statistikk");
+        saveID("ID");
+
+        //Sjekker om det skal startes nytt eller avsluttes.
+        if(RESULT==RESULT_OK){
+            startNyttSpill();
+        }else{
+            finish();
+        }
+    }
+
+     //Metode som setter verdier og starter nytt spill
+    public void startNyttSpill(){
+        getAlleOppgaver();
+        alle_oppgaver =stringtoArray(alleOppgaver,0);
+        etSpill = new MatteSpill(antall_oppgaver,alle_oppgaver);
+        teller = 0;
+        first = 0;
+        tellerFeilSvar = 0;
+        tellerRiktigeSvar = 0;
+        antallRiktigeSvar.setText(Integer.toString(tellerRiktigeSvar));
+        antallFeilSvar.setText(Integer.toString(tellerFeilSvar));
+        oppgaver = etSpill.getOppgaver();
+        svar = etSpill.getSvar();
+        oppgaverOgSvar=etSpill.getOppgaverOgSvar();
+        txtSvar.setText("");
+        txtOppgaver.setText(oppgaver[teller]);
+    }
+
+    //Hjelpemetode for knappene som legger inn tall
     public void skrivInn(int tall){
 
         if(first != 0){
@@ -306,66 +330,55 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
 
     }
 
-    //DIALOG
 
-    public void dialogAvslutt(){
-        DialogFragment dialogFragment = new MyDialog();
-        dialogFragment.show(getSupportFragmentManager(),"avslutt");
+    //Metoder for å konvertere mellom String og array for lagring i SHAREDPREFENCES
+    public static String [] stringtoArray(String toArray, int fjern){
+        String [] array = toArray.split("\n");
+          return array;
     }
 
-    public void dialogFerdig(String title){
-        DialogFragment dialogFragment = new NyttSpillDialog(title);
-        //char dialogTitle = title.charAt(0);
-        //dialogFragment.getDialog().setTitle(title);
-        
-        dialogFragment.show(getSupportFragmentManager(),"nytt");
-    }
-
-    @Override
-    public void btnAvbryt() {
-        return;
-    }
-
-    @Override
-    public void btnAvslutt() {
-        //onBackPressed();
-        finish();
-    }
-
-    //Metode som lagrer det ferdige spillet til statistikken
-        //Starter enten nytt spill for bruker eller avslutter og går tilbake til hovedskjerm.
-public void  ferdigSpill(int RESULT){
-
-        getStatistikk("statistikk");
-        getID("ID");
-
-        //int feil = antall_oppgaver - etSpill.getAntall_riktige();
-        String nyttSpill = ID + "\t:\t " + tellerRiktigeSvar +
-                "\t:\t" + tellerFeilSvar + "\t:\t" + antall_oppgaver + "\n";
-        statistikk+=nyttSpill;
-        ID+=1;
-        saveStatistikk("statistikk");
-        saveID("ID");
-
-        if(RESULT==RESULT_OK){
-            startNyttSpill();
-        }else{
-            finish();
+    public static String arrayToString(String [] array){
+        String ut="";
+        for(String etSpill : array){
+            if(!etSpill.isEmpty()){
+              ut+=etSpill+"\n";
+            }
         }
+        return ut;
     }
 
-    @Override
-    public void btnStartNytt() {
-        ferdigSpill(RESULT_OK);
-    }
 
-    @Override
-    public void btnTilbake() {
-        ferdigSpill(RESULT_CANCELED);
-    }
+
+    public boolean updateOppgaver(){
+         oppgaverOgSvar = etSpill.getOppgaverOgSvar() ;
+         String [] brukteOppgaver = oppgaverOgSvar;
+         String [] ubrukteOppgaver = alle_oppgaver;
+
+         for(int i = 0; i<brukteOppgaver.length;i++){
+             for(int j = i; j < ubrukteOppgaver.length; j++){
+                if(brukteOppgaver[i].equals(ubrukteOppgaver[j])){
+                    ubrukteOppgaver[i]="";
+                }
+             }
+         }
+         alleOppgaver = arrayToString(ubrukteOppgaver);
+         alle_oppgaver=stringtoArray(alleOppgaver,0);
+         alleOppgaver=arrayToString(alle_oppgaver);
+         saveAlleOppgaver();
+
+         if(alle_oppgaver.length<antall_oppgaver){
+           alle_oppgaver=getResources().getStringArray(R.array.matteoppgaver);
+           alleOppgaver=arrayToString(alle_oppgaver);
+           saveAlleOppgaver();
+           return false;
+         }
+         return true;
+     }
 
     // DIALOG
 
+    //Metoder for å få og lagre til SHAREDPREFERENCES
+        //  ------->
 
     public void saveStatistikk(String PREF){
         getSharedPreferences("PREFERENCE",MODE_PRIVATE).edit().putString(PREF,statistikk).apply();
@@ -384,34 +397,14 @@ public void  ferdigSpill(int RESULT){
         ID  = getSharedPreferences("PREFERENCE",MODE_PRIVATE).getInt(PREF,0);
     }
 
-
-
     public void saveAlleOppgaver(){
             getSharedPreferences("PREFERENCE",MODE_PRIVATE).edit().putString("alle_oppgaver",alleOppgaver).apply();
 
         }
-        public void getAlleOppgaver(){
-            alleOppgaver  = getSharedPreferences("PREFERENCE",MODE_PRIVATE).getString("alle_oppgaver","");
+    public void getAlleOppgaver(){
+        alleOppgaver  = getSharedPreferences("PREFERENCE",MODE_PRIVATE).getString("alle_oppgaver","");
 
-        }
-
-        public static String [] stringtoArray(String toArray, int fjern){
-            String [] array = toArray.split("\n");
-              return array;
-        }
-
-        public static String arrayToString(String [] array){
-            String ut="";
-            for(String etSpill : array){
-                if(!etSpill.isEmpty()){
-                  ut+=etSpill+"\n";
-                }
-            }
-            return ut;
-        }
-
-
-
+    }
 
 
     //kode for endring av språk
@@ -432,14 +425,13 @@ public void  ferdigSpill(int RESULT){
 
     public void tysk() {
         settland("de");
-        //recreate();
     }
 
     public void norsk() {
         settland("no");
-        //recreate();
-    } //endring av språk
+    }
 
+    //endring av språk
     public void lesPref(){
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         String value = sp.getString(listSprok, "0");

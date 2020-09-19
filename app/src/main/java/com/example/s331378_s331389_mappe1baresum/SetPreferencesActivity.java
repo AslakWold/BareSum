@@ -44,24 +44,62 @@ public class SetPreferencesActivity extends PreferenceActivity{
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         String value = sp.getString(listSprok, "0");
         System.out.println(value);
-        if(value.equals("1")){
+        if (value.equals("1")) {
             norsk();
-        }else{
+        } else {
             tysk();
         }
-
         super.onCreate(savedInstanceState);
         PrefsFragment prefsFragment = new PrefsFragment();
         getFragmentManager().beginTransaction().replace(android.R.id.content, prefsFragment).commit();
 
-    }
+    }//onCreate ends
 
 
+    public static class PrefsFragment extends PreferenceFragment{
+        private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
+
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.preferences);
+
+            //Lytter etter endringer av valg i Preferencelistene
+            preferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+                @Override
+                public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+                        getActivity().recreate();
+                    }
+                };
+
+        }
+
+        //registrer og uregistrerer endringene
+       @Override
+        public void onResume() {
+            super.onResume();
+            getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(preferenceChangeListener);
+            Log.d("TAG", "Er i onResume");
+        }
+       @Override
+        public void onPause() {
+            super.onPause();
+            getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
+            Log.d("TAG", "Er i onPause");
+        }
+
+    } //PrefsFragment end
+
+
+
+
+    //Kode for endring av land
     public void settland(String landskode) {
         Resources res = getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
@@ -87,60 +125,6 @@ public class SetPreferencesActivity extends PreferenceActivity{
         settland("no");
         //recreate();
     } //endring av språk
-
-
-
-    public static class PrefsFragment extends PreferenceFragment{
-
-        public static final String PREF_SPROK = "listSprok";
-        public static final String PREF_ANTALL = "listAntallOppgaver";
-
-        private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
-        public static String landskode = "de";
-
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.preferences);
-
-            preferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-
-                @Override
-                public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-                        getActivity().recreate();
-                    }
-                };
-
-        }
-
-       @Override
-        public void onResume() {
-            super.onResume();
-            getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(preferenceChangeListener);
-            Log.d("TAG", "Er i onResume");
-        }
-
-       @Override
-        public void onPause() {
-            super.onPause();
-            getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
-            Log.d("TAG", "Er i onPause");
-        }
-       /* public void settland(String landskode) {
-            Resources res = getResources();
-            DisplayMetrics dm = res.getDisplayMetrics();
-            Configuration cf = res.getConfiguration();
-            Locale ny = new Locale((landskode));
-            Locale curr = getResources().getConfiguration().locale;
-
-            if(!curr.equals(ny)){
-                cf.setLocale(ny);
-                res.updateConfiguration(cf, dm);
-            }
-        } //settland */
-    } //PrefsFragment end
-
 
 } //SetPreferencesActivity End
 

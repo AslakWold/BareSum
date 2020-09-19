@@ -29,16 +29,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         lesPref();
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
-
         PreferenceManager.setDefaultValues(this,R.xml.preferences,false);
         //getStatistikk();
 
-        saveStatistikk();
+        //saveStatistikk();
 
         getAlleOppgaver();
 
+        //Henter oppgaver
         String [] alleOppgaver = getResources().getStringArray(R.array.matteoppgaver);
         alle_oppgaver = arrayToString(alleOppgaver);
         saveAlleOppgaver();
@@ -72,6 +71,15 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent,69);
     }
 
+    //Metode for å lagre ARRAY i SHAREDPREFERENCES
+    public static String arrayToString(String [] array){
+        String ut="";
+        for(String etSpill : array){
+            ut+=etSpill+"\n";
+        }
+        return ut;
+    }
+
     //kode for endring av språk
 
     public void settland(String landskode) {
@@ -90,12 +98,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void tysk() {
         settland("de");
-        //recreate();
     }
 
     public void norsk() {
         settland("no");
-        //recreate();
     } //endring av språk
 
     public void lesPref(){
@@ -109,15 +115,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void saveStatistikk(){
-        getSharedPreferences("PREFERENCE",MODE_PRIVATE).edit().putString("statistikk",statistikk).apply();
+
+    //METODER FOR HENTING FRA TIL SHAREDPREFERENCES
+
+    public void saveStatistikk() {
+        getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putString("statistikk", statistikk).apply();
 
     }
-    public void getStatistikk(){
-        statistikk  = getSharedPreferences("PREFERENCE",MODE_PRIVATE).getString("statistikk","");
-
-    }
-
     public void saveAlleOppgaver(){
         getSharedPreferences("PREFERENCE",MODE_PRIVATE).edit().putString("alle_oppgaver",alle_oppgaver).apply();
 
@@ -127,43 +131,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public static String [] stringtoArray(String toArray){
-        String [] array = toArray.split("\n");
-        return array;
-    }
-    public static String arrayToString(String [] array){
-        String ut="";
-        for(String etSpill : array){
-            ut+=etSpill+"\n";
-        }
-        return ut;
-    }
-
-
-   /* @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("NOCE");
-        if(requestCode==420){
-            if(resultCode==RESULT_CANCELED){
-                statistikk = data.getStringArrayListExtra("statistikk");
-            }if(resultCode==RESULT_OK){
-                statistikk = data.getStringArrayListExtra("statistikk");
-                for(String k : statistikk){
-                    System.out.println(k);
-                }
-                Intent i = new Intent(this, SpillActivity.class);
-                i.putStringArrayListExtra("statistikk",statistikk);
-                startActivityForResult(i,420);
-            }
-
-        }if(requestCode==69){
-            if(resultCode==RESULT_OK){
-                statistikk = data.getStringArrayListExtra("statistikk");
-
-            }
-        }
-
-
-    }*/
-}
+}//Mainactivity end

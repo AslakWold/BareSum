@@ -33,7 +33,7 @@ public class NyttSpillDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
-        return new AlertDialog.Builder(getActivity()).setTitle(title)
+        return new AlertDialog.Builder(getActivity())
                 .setPositiveButton(R.string.startNytt, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
