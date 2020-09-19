@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         PreferenceManager.setDefaultValues(this,R.xml.preferences,false);
         //getStatistikk();
 
-        //saveStatistikk();
+        saveStatistikk();
 
         getAlleOppgaver();
 

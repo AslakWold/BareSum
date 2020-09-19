@@ -69,6 +69,8 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
             svar = savedInstanceState.getStringArray("svar");
             antallRiktigeSvarString = savedInstanceState.getString("antallRiktigeSvar");
             antallFeilSvarString = savedInstanceState.getString("antallFeilSvar");
+            tellerRiktigeSvar = savedInstanceState.getInt("tellerRiktigeSvar");
+            tellerFeilSvar = savedInstanceState.getInt("tellerFeilSvar");
 
 
             besvarelse = savedInstanceState.getString("besvarelse");
@@ -100,8 +102,6 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
 
             teller = 0;
             first = 0;
-            tellerRiktigeSvar = 0;
-            tellerFeilSvar = 0;
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spill);
@@ -134,13 +134,13 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
         first = 0;
         tellerFeilSvar = 0;
         tellerRiktigeSvar = 0;
+        antallRiktigeSvar.setText(Integer.toString(tellerRiktigeSvar));
+        antallFeilSvar.setText(Integer.toString(tellerFeilSvar));
         oppgaver = etSpill.getOppgaver();
         svar = etSpill.getSvar();
         oppgaverOgSvar=etSpill.getOppgaverOgSvar();
         txtSvar.setText("");
         txtOppgaver.setText(oppgaver[teller]);
-        antallFeilSvar.setText("0");
-        antallRiktigeSvar.setText("0");
     }
 
    public boolean updateOppgaver(){
@@ -167,7 +167,7 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
           return false;
         }
         return true;
-    }                 
+    }
 
 
     @Override
@@ -176,6 +176,8 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
         savedInstanceState.putInt("teller", teller);
         savedInstanceState.putInt("antall_oppgaver",antall_oppgaver);
         savedInstanceState.putInt("antall_riktige",etSpill.getAntall_riktige());
+        savedInstanceState.putInt("tellerRiktigeSvar", tellerRiktigeSvar);
+        savedInstanceState.putInt("tellerFeilSvar", tellerFeilSvar);
         savedInstanceState.putStringArray("oppgaver",oppgaver);
         savedInstanceState.putStringArray("svar",svar);
 
@@ -255,14 +257,13 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
         String riktig_svar = (String)txtSvar.getText();
         String input_svar = svar[teller];
         String dialogTitle = getResources().getString(R.string.titleNyttSpillDialog);
-        //boolean oppgaverOppbrukt = updateOppgaver();
 
         if(teller+1 >= antall_oppgaver){
             /*if(!updateOppgaver()){
                 dialogTitle = getResources().getString(R.string.ikkeNokOppgaver);
             }       */
 
-            
+
             if(riktig_svar.equals(input_svar)) {
                 tellerRiktigeSvar++;
                 antallRiktigeSvar.setText(Integer.toString(tellerRiktigeSvar));
@@ -339,8 +340,8 @@ public void  ferdigSpill(int RESULT){
         getID("ID");
 
         //int feil = antall_oppgaver - etSpill.getAntall_riktige();
-        String nyttSpill = ID + " : " + tellerRiktigeSvar +
-                " : " + tellerFeilSvar + " : " + antall_oppgaver + "\n";
+        String nyttSpill = ID + "\t:\t " + tellerRiktigeSvar +
+                "\t:\t" + tellerFeilSvar + "\t:\t" + antall_oppgaver + "\n";
         statistikk+=nyttSpill;
         ID+=1;
         saveStatistikk("statistikk");
