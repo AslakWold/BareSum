@@ -1,26 +1,17 @@
 package com.example.s331378_s331389_mappe1baresum;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
-
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 
 public class SpillActivity extends AppCompatActivity implements MyDialog.DialogClickListener,NyttSpillDialog.DialogListener{
@@ -46,8 +37,6 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
     String [] svar;
     String [] oppgaverOgSvar;
     String alleOppgaver;
-    ArrayList<String> oppgaverStatistikk;
-    Toolbar spillToolbar;
     String statistikk;
     public int ID;
 
@@ -65,10 +54,13 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
         if (savedInstanceState != null) {
             int riktige;
             teller = savedInstanceState.getInt("teller");
+            first = savedInstanceState.getInt("first");
+
             antall_oppgaver = savedInstanceState.getInt("antall_oppgaver");
             riktige = savedInstanceState.getInt("antall_riktige");
             oppgaver = savedInstanceState.getStringArray("oppgaver");
             svar = savedInstanceState.getStringArray("svar");
+
             antallRiktigeSvarString = savedInstanceState.getString("antallRiktigeSvar");
             antallFeilSvarString = savedInstanceState.getString("antallFeilSvar");
             tellerRiktigeSvar = savedInstanceState.getInt("tellerRiktigeSvar");
@@ -106,7 +98,9 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
 
             teller = 0;
             first = 0;
+
         }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spill);
         txtOppgaver = findViewById(R.id.txtOppgaver);
@@ -120,6 +114,7 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
         antallFeilSvar.setText(Integer.toString(tellerFeilSvar));
         antallRiktigeSvar.setText(antallRiktigeSvarString);
         antallFeilSvar.setText(antallFeilSvarString);
+
     }
 
 
@@ -128,6 +123,7 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putInt("teller", teller);
+        savedInstanceState.putInt("first", first);
         savedInstanceState.putInt("antall_oppgaver",antall_oppgaver);
         savedInstanceState.putInt("antall_riktige",etSpill.getAntall_riktige());
         savedInstanceState.putInt("tellerRiktigeSvar", tellerRiktigeSvar);
@@ -189,16 +185,18 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
      //Fjerner deen siste verdien som er skrevet inn dersom det er skrevet inn noe
 
     public void btnFjern(View v) {
-        if(first==0){
+        if(first != 0){
 
-        } else{
         String svar = (String)txtSvar.getText();
         String nyttSvar = "";
         char [] cSvar = svar.toCharArray();
         for(int i = 0;i < cSvar.length-1;i++){
             nyttSvar+=cSvar[i];
         }
-        txtSvar.setText(nyttSvar);    }
+
+        txtSvar.setText(nyttSvar);
+
+        }
     }
 
 
@@ -212,12 +210,17 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
             if(riktig_svar.equals(input_svar)) {
                 tellerRiktigeSvar++;
                 antallRiktigeSvar.setText(Integer.toString(tellerRiktigeSvar));
+                tellerRiktigeSvar = 0;
+                tellerFeilSvar = 0;
                 dialogFerdig(dialogTitle);
             } else {
                 tellerFeilSvar++;
                 antallFeilSvar.setText(Integer.toString(tellerFeilSvar));
+                tellerRiktigeSvar = 0;
+                tellerFeilSvar = 0;
                 dialogFerdig(dialogTitle);
             }
+
         }else {
 
             if (riktig_svar.equals(input_svar)) {
@@ -301,16 +304,21 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
     public void startNyttSpill(){
         getAlleOppgaver();
         alle_oppgaver =stringtoArray(alleOppgaver,0);
+
         etSpill = new MatteSpill(antall_oppgaver,alle_oppgaver);
+
         teller = 0;
         first = 0;
+
         tellerFeilSvar = 0;
         tellerRiktigeSvar = 0;
         antallRiktigeSvar.setText(Integer.toString(tellerRiktigeSvar));
         antallFeilSvar.setText(Integer.toString(tellerFeilSvar));
+
         oppgaver = etSpill.getOppgaver();
         svar = etSpill.getSvar();
         oppgaverOgSvar=etSpill.getOppgaverOgSvar();
+
         txtSvar.setText("");
         txtOppgaver.setText(oppgaver[teller]);
     }
@@ -339,41 +347,16 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
 
     public static String arrayToString(String [] array){
         String ut="";
+
         for(String etSpill : array){
             if(!etSpill.isEmpty()){
               ut+=etSpill+"\n";
             }
         }
+
         return ut;
     }
 
-
-
-    public boolean updateOppgaver(){
-         oppgaverOgSvar = etSpill.getOppgaverOgSvar() ;
-         String [] brukteOppgaver = oppgaverOgSvar;
-         String [] ubrukteOppgaver = alle_oppgaver;
-
-         for(int i = 0; i<brukteOppgaver.length;i++){
-             for(int j = i; j < ubrukteOppgaver.length; j++){
-                if(brukteOppgaver[i].equals(ubrukteOppgaver[j])){
-                    ubrukteOppgaver[i]="";
-                }
-             }
-         }
-         alleOppgaver = arrayToString(ubrukteOppgaver);
-         alle_oppgaver=stringtoArray(alleOppgaver,0);
-         alleOppgaver=arrayToString(alle_oppgaver);
-         saveAlleOppgaver();
-
-         if(alle_oppgaver.length<antall_oppgaver){
-           alle_oppgaver=getResources().getStringArray(R.array.matteoppgaver);
-           alleOppgaver=arrayToString(alle_oppgaver);
-           saveAlleOppgaver();
-           return false;
-         }
-         return true;
-     }
 
     // DIALOG
 
@@ -381,16 +364,21 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
         //  ------->
 
     public void saveStatistikk(String PREF){
-        getSharedPreferences("PREFERENCE",MODE_PRIVATE).edit().putString(PREF,statistikk).apply();
+        getSharedPreferences("PREFERENCE",MODE_PRIVATE)
+                .edit()
+                .putString(PREF,statistikk)
+                .apply();
 
     }
     public void getStatistikk(String PREF){
-        statistikk  = getSharedPreferences("PREFERENCE",MODE_PRIVATE).getString(PREF,"");
+        statistikk  = getSharedPreferences("PREFERENCE",MODE_PRIVATE)
+                .getString(PREF,"");
     }
 
 
     public void saveID(String PREF){
-        getSharedPreferences("PREFERENCE",MODE_PRIVATE).edit().putInt(PREF,ID).apply();
+        getSharedPreferences("PREFERENCE",MODE_PRIVATE).edit()
+                .putInt(PREF,ID).apply();
 
     }
     public void getID(String PREF){
@@ -398,11 +386,15 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
     }
 
     public void saveAlleOppgaver(){
-            getSharedPreferences("PREFERENCE",MODE_PRIVATE).edit().putString("alle_oppgaver",alleOppgaver).apply();
+            getSharedPreferences("PREFERENCE",MODE_PRIVATE)
+                    .edit()
+                    .putString("alle_oppgaver",alleOppgaver)
+                    .apply();
 
         }
     public void getAlleOppgaver(){
-        alleOppgaver  = getSharedPreferences("PREFERENCE",MODE_PRIVATE).getString("alle_oppgaver","");
+        alleOppgaver  = getSharedPreferences("PREFERENCE",MODE_PRIVATE)
+                .getString("alle_oppgaver","");
 
     }
 
@@ -435,7 +427,7 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
     public void lesPref(){
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         String value = sp.getString(listSprok, "0");
-        System.out.println(value);
+
         if(value.equals("1")){
             norsk();
         }else{
@@ -443,4 +435,4 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
         }
     }
 
-}
+} //SpillActivity - slutt

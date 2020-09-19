@@ -1,21 +1,14 @@
 package com.example.s331378_s331389_mappe1baresum;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.preference.SwitchPreference;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.Button;
-
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,9 +24,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         PreferenceManager.setDefaultValues(this,R.xml.preferences,false);
-        //getStatistikk();
-
-        //saveStatistikk();
 
         getAlleOppgaver();
 
@@ -45,12 +35,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+    //Bevarer tilstanden i MainActivity ved rotasjon
     @Override
     protected void onResume() {
         lesPref();
         super.onResume();
     }
+
+    //Buttons ---->
 
     public void btnStartSpill(View v) {
         Intent i = new Intent(this, SpillActivity.class);
@@ -64,9 +56,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void btnSeStatistikk(View v) {
         Intent intent = new Intent(this, StatistikkActivity.class);
-        intent.putExtra("statistikk",statistikk);
         startActivityForResult(intent,69);
-    }
+    } //Buttons - slutt
+
+
 
     //Metode for å lagre ARRAY i SHAREDPREFERENCES
     public static String arrayToString(String [] array){
@@ -104,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     public void lesPref(){
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         String value = sp.getString(listSprok, "0");
-        System.out.println(value);
+
         if(value.equals("1")){
             norsk();
         }else{
@@ -116,15 +109,24 @@ public class MainActivity extends AppCompatActivity {
     //METODER FOR HENTING FRA TIL SHAREDPREFERENCES
 
     public void saveStatistikk() {
-        getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putString("statistikk", statistikk).apply();
+        getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                .edit()
+                .putString("statistikk", statistikk)
+                .apply();
 
     }
+
     public void saveAlleOppgaver(){
-        getSharedPreferences("PREFERENCE",MODE_PRIVATE).edit().putString("alle_oppgaver",alle_oppgaver).apply();
+        getSharedPreferences("PREFERENCE",MODE_PRIVATE)
+                .edit()
+                .putString("alle_oppgaver",alle_oppgaver)
+                .apply();
 
     }
+
     public void getAlleOppgaver(){
-        alle_oppgaver  = getSharedPreferences("PREFERENCE",MODE_PRIVATE).getString("alle_oppgaver","");
+        alle_oppgaver  = getSharedPreferences("PREFERENCE",MODE_PRIVATE)
+                .getString("alle_oppgaver","");
 
     }
 

@@ -1,59 +1,27 @@
 package com.example.s331378_s331389_mappe1baresum;
 
 
-import android.app.ActionBar;
-import android.app.Fragment;
-import android.content.Intent;
-import android.content.LocusId;
+
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.os.Bundle;
-import android.os.CancellationSignal;
-import android.os.PersistableBundle;
-import android.preference.ListPreference;
-import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.preference.PreferenceScreen;
-import android.preference.SwitchPreference;
-import android.transition.Scene;
-import android.transition.TransitionManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
-
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
-
-import java.util.List;
 import java.util.Locale;
-import java.util.function.Consumer;
-import java.util.prefs.PreferenceChangeListener;
+
 
 public class SetPreferencesActivity extends PreferenceActivity{
 
     public static final String listSprok = "listSprok";
-    private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        String value = sp.getString(listSprok, "0");
-        System.out.println(value);
-        if (value.equals("1")) {
-            norsk();
-        } else {
-            tysk();
-        }
+        lesPref();
         super.onCreate(savedInstanceState);
         PrefsFragment prefsFragment = new PrefsFragment();
         getFragmentManager().beginTransaction().replace(android.R.id.content, prefsFragment).commit();
@@ -118,13 +86,22 @@ public class SetPreferencesActivity extends PreferenceActivity{
 
     public void tysk() {
         settland("de");
-        //recreate();
     }
 
     public void norsk() {
         settland("no");
-        //recreate();
-    } //endring av språk
+    }
+
+    public void lesPref(){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        String value = sp.getString(listSprok, "0");
+
+        if(value.equals("1")){
+            norsk();
+        }else{
+            tysk();
+        }
+    }//endring av språk
 
 } //SetPreferencesActivity End
 

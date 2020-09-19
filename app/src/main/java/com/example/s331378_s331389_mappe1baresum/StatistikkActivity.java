@@ -1,5 +1,6 @@
 package com.example.s331378_s331389_mappe1baresum;
 
+
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -19,7 +20,7 @@ public class StatistikkActivity extends AppCompatActivity {
 
     public static String listSprok = "listSprok";
     TextView txtSpillList;
-    TextView Resultater;
+    TextView txtResultater;
     EditText ID;
     String statistikk;
 
@@ -30,12 +31,13 @@ public class StatistikkActivity extends AppCompatActivity {
         setContentView(R.layout.activity_statistikk);
 
         txtSpillList = findViewById(R.id.txtSpillStat);
-        Resultater = findViewById(R.id.txtResultater);
+        txtResultater = findViewById(R.id.txtResultater);
         ID = findViewById((R.id.etID));
 
         //Setter oversikt for hvilken verdi som er hvilken verdi
 
         String id = getResources().getString(R.string.id);
+        String dato = getResources().getString(R.string.dato);
         String riktige = getResources().getString(R.string.riktige);
         String feil = getResources().getString(R.string.antfeil);
         String totalt = getResources().getString(R.string.totalt);
@@ -46,23 +48,21 @@ public class StatistikkActivity extends AppCompatActivity {
         getStatistikk("statistikk");
 
         txtSpillList.setText(spillList);
-        Resultater.setText(statistikk);
+        txtResultater.setText(statistikk);
 
 
     }
 
     public void btnSlettSpill(View view) {
 
-        String id = ID.getText().toString();
         try{
-        int idSlett = Integer.parseInt(id);
+        int idSlett = Integer.parseInt(ID.getText().toString());
 
         getStatistikk("statistikk");
         ArrayList<String> arrayListStat = stringtoArray(statistikk);
 
 
         for(int i = 1; i< arrayListStat.size()+1; i++){
-            //String [] elementer = arrayListStat.get(i-1).split("\\s+");
             try{
                 int idSjekk = findID(arrayListStat.get(i-1));
 
@@ -71,15 +71,15 @@ public class StatistikkActivity extends AppCompatActivity {
                     break;
                 }
             }catch(IllegalArgumentException e){
-                System.out.println("FEIL");
+                throw new IllegalArgumentException("Fant ikke ID");
             }
-
         }
 
         statistikk = arraylistToString(arrayListStat);
 
-        Resultater.setText(statistikk);
+        txtResultater.setText(statistikk);
         saveStatistikk("statistikk");
+
         }catch (IllegalArgumentException e){
             String feilID = getResources().getString(R.string.feilID);
             ID.setText(feilID);
@@ -90,17 +90,20 @@ public class StatistikkActivity extends AppCompatActivity {
 
 
     public void saveStatistikk(String PREF){
-        getSharedPreferences("PREFERENCE",MODE_PRIVATE).edit().putString(PREF,statistikk).apply();
+        getSharedPreferences("PREFERENCE",MODE_PRIVATE)
+                .edit()
+                .putString(PREF,statistikk)
+                .apply();
 
     }
     public void getStatistikk(String PREF){
-        statistikk  = getSharedPreferences("PREFERENCE",MODE_PRIVATE).getString(PREF,"");
+        statistikk  = getSharedPreferences("PREFERENCE",MODE_PRIVATE)
+                .getString(PREF,"");
     }
 
 
     public static ArrayList<String> stringtoArray(String toArray){
         String [] array = toArray.split("\n");
-        System.out.println(array.length);
         ArrayList<String> tmp = new ArrayList<>();
 
         for(int i = 0;i<array.length;i++){
@@ -166,7 +169,7 @@ public class StatistikkActivity extends AppCompatActivity {
     public void lesPref(){
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         String value = sp.getString(listSprok, "0");
-        System.out.println(value);
+
         if(value.equals("1")){
             norsk();
         }else{
@@ -174,4 +177,4 @@ public class StatistikkActivity extends AppCompatActivity {
         }
     }
     //Endring av språk - slutt
-}
+} //StatistikkActivity - slutt

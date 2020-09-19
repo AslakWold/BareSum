@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 public class MyDialog extends DialogFragment {
@@ -41,7 +40,7 @@ public class MyDialog extends DialogFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         callback.btnAvslutt();
                     }
-                }).setView(R.layout.dialog_activity1)
+                }).setView(R.layout.activity_dialog)
                 .create();
     }
-}
+} //MyDialog - slutt

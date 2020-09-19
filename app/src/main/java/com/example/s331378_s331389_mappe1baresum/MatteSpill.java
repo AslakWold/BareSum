@@ -9,9 +9,7 @@ public class MatteSpill {
     String [] oppgaverOgSvar;
 
     //Konstruktører
-    public MatteSpill(){
-
-    }
+    public MatteSpill(){}
 
     //konstruktør som setter alle verdier ved hjelp av metodene .
 
