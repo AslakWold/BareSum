@@ -44,6 +44,7 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
     String [] alle_oppgaver;
     String [] oppgaver;
     String [] svar;
+    String [] oppgaverOgSvar;
     String alleOppgaver;
     ArrayList<String> oppgaverStatistikk;
     Toolbar spillToolbar;
@@ -95,6 +96,7 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
 
             oppgaver = etSpill.getOppgaver();
             svar = etSpill.getSvar();
+            oppgaverOgSvar = etSpill.getOppgaverOgSvar();
 
             teller = 0;
             first = 0;
@@ -125,9 +127,8 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
     }
 
     public void startNyttSpill(){
-        for(String i : alle_oppgaver){
-            System.out.println(i);
-        }
+        getAlleOppgaver();
+        alle_oppgaver =stringtoArray(alleOppgaver,0);
         etSpill = new MatteSpill(antall_oppgaver,alle_oppgaver);
         teller = 0;
         first = 0;
@@ -135,9 +136,38 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
         tellerRiktigeSvar = 0;
         oppgaver = etSpill.getOppgaver();
         svar = etSpill.getSvar();
+        oppgaverOgSvar=etSpill.getOppgaverOgSvar();
         txtSvar.setText("");
         txtOppgaver.setText(oppgaver[teller]);
+        antallFeilSvar.setText("0");
+        antallRiktigeSvar.setText("0");
     }
+
+   public boolean updateOppgaver(){
+        oppgaverOgSvar = etSpill.getOppgaverOgSvar() ;
+        String [] brukteOppgaver = oppgaverOgSvar;
+        String [] ubrukteOppgaver = alle_oppgaver;
+
+        for(int i = 0; i<brukteOppgaver.length;i++){
+            for(int j = i; j < ubrukteOppgaver.length; j++){
+               if(brukteOppgaver[i].equals(ubrukteOppgaver[j])){
+                   ubrukteOppgaver[i]="";
+               }
+            }
+        }
+        alleOppgaver = arrayToString(ubrukteOppgaver);
+        alle_oppgaver=stringtoArray(alleOppgaver,0);
+        alleOppgaver=arrayToString(alle_oppgaver);
+        saveAlleOppgaver();
+
+        if(alle_oppgaver.length<antall_oppgaver){
+          alle_oppgaver=getResources().getStringArray(R.array.matteoppgaver);
+          alleOppgaver=arrayToString(alle_oppgaver);
+          saveAlleOppgaver();
+          return false;
+        }
+        return true;
+    }                 
 
 
     @Override
@@ -225,8 +255,14 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
         String riktig_svar = (String)txtSvar.getText();
         String input_svar = svar[teller];
         String dialogTitle = getResources().getString(R.string.titleNyttSpillDialog);
+        //boolean oppgaverOppbrukt = updateOppgaver();
 
         if(teller+1 >= antall_oppgaver){
+            /*if(!updateOppgaver()){
+                dialogTitle = getResources().getString(R.string.ikkeNokOppgaver);
+            }       */
+
+            
             if(riktig_svar.equals(input_svar)) {
                 tellerRiktigeSvar++;
                 antallRiktigeSvar.setText(Integer.toString(tellerRiktigeSvar));
