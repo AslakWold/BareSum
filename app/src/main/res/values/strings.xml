@@ -7,7 +7,7 @@
     <!-- Preferanser -->
 
     <string name="antallOppgaver">Antall Oppgaver</string>
-    <string name="txtVelgAntall">Velg hvor mange oppgaver du vil ha per spill.</string>
+    <string name="txtVelgAntall">Antall oppgaver per spill.</string>
     <string name="box5Oppg">5 Oppgaver</string>
     <string name="box10Oppg">10 Oppgaver</string>
     <string name="box25Oppg">25 Oppgaver</string>
@@ -20,18 +20,18 @@
     <string name="sprok">Språk</string>
 
 
-    <string name="feil">Ikke helt riktig det der :( Riktig svar er : </string>
-    <string name="riktig">Bra jobba du svarte riktig!!!</string>
+    <string name="feil">Feil. Riktig svar er: </string>
+    <string name="riktig">Riktig!</string>
 
 
     <!-- Avslutt spill Dialog -->
 
-    <string name="titleDialog1">Vil du avlsutte spillet?</string>
+    <string name="titleDialog1">Avslutt spillet?</string>
     <string name="Avslutt">Avslutt</string>
     <string name="Avbryt">Avbryt</string>
 
     <!-- Nytt spill dialog -->
-    <string name="titleNyttSpillDialog">Vil  du gå tilbake til hovedskjermen eller starte nytt spill?</string>
+    <!-- <string name="titleNyttSpillDialog">Vil  du gå tilbake til hovedskjermen eller starte nytt spill?</string> -->
     <string name="startNytt">Start nytt spill</string>
     <string name="tilbake">Gå tilbake</string>
 

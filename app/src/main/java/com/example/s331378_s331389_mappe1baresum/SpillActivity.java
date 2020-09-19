@@ -3,10 +3,12 @@ package com.example.s331378_s331389_mappe1baresum;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,9 +21,11 @@ import androidx.fragment.app.DialogFragment;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class SpillActivity extends AppCompatActivity implements MyDialog.DialogClickListener,NyttSpillDialog.DialogListener{
 
+    public static final String listSprok = "listSprok";
     public static final String LIST_ALT_OPPGAVER = "listAntallOppgaver";
     MatteSpill etSpill;
 
@@ -48,7 +52,7 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
 
     protected void onCreate(Bundle savedInstanceState) {
 
-
+        lesPref();
         String besvarelse = "";
         String antallRiktigeSvarString = "";
         String antallFeilSvarString = "";
@@ -78,6 +82,7 @@ public class SpillActivity extends AppCompatActivity implements MyDialog.DialogC
             } else {
                 antall_oppgaver = 25;
             }
+
 
             String statistikk = "";
             getSharedPreferences("Preference", MODE_PRIVATE).edit().putString("statistikk", statistikk).apply();
@@ -364,5 +369,41 @@ public void  ferdigSpill(int RESULT){
         return ut;
     }
 
+    //kode for endring av språk
+
+    public void settland(String landskode) {
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration cf = res.getConfiguration();
+        Locale ny = new Locale((landskode));
+        Locale curr = getResources().getConfiguration().locale;
+
+        if(!curr.equals(ny)){
+            cf.setLocale(ny);
+            res.updateConfiguration(cf, dm);
+            recreate();
+        }
+    }
+
+    public void tysk() {
+        settland("de");
+        //recreate();
+    }
+
+    public void norsk() {
+        settland("no");
+        //recreate();
+    } //endring av språk
+
+    public void lesPref(){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        String value = sp.getString(listSprok, "0");
+        System.out.println(value);
+        if(value.equals("1")){
+            norsk();
+        }else{
+            tysk();
+        }
+    }
 
 }

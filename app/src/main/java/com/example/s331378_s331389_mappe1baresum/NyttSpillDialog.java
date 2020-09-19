@@ -19,7 +19,6 @@ public class NyttSpillDialog extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         try{
             callback=(DialogListener)getActivity();
         }catch(ClassCastException e){
@@ -29,7 +28,7 @@ public class NyttSpillDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
-        return new AlertDialog.Builder(getActivity()).setTitle(R.string.titleNyttSpillDialog)
+        return new AlertDialog.Builder(getActivity())
                 .setPositiveButton(R.string.startNytt, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

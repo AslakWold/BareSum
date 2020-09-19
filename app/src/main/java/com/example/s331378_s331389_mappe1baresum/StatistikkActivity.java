@@ -1,7 +1,12 @@
 package com.example.s331378_s331389_mappe1baresum;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -9,15 +14,18 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class StatistikkActivity extends AppCompatActivity {
 
+    public static String listSprok = "listSprok";
     TextView txtSpillList;
     EditText ID;
     String statistikk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        lesPref();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistikk);
 
@@ -93,5 +101,42 @@ public class StatistikkActivity extends AppCompatActivity {
             ut+=etSpill+"\n";
         }
         return ut;
+    }
+
+    //kode for endring av språk
+
+    public void settland(String landskode) {
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration cf = res.getConfiguration();
+        Locale ny = new Locale((landskode));
+        Locale curr = getResources().getConfiguration().locale;
+
+        if(!curr.equals(ny)){
+            cf.setLocale(ny);
+            res.updateConfiguration(cf, dm);
+            recreate();
+        }
+    }
+
+    public void tysk() {
+        settland("de");
+        //recreate();
+    }
+
+    public void norsk() {
+        settland("no");
+        //recreate();
+    } //endring av språk
+
+    public void lesPref(){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        String value = sp.getString(listSprok, "0");
+        System.out.println(value);
+        if(value.equals("1")){
+            norsk();
+        }else{
+            tysk();
+        }
     }
 }

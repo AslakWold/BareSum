@@ -7,7 +7,7 @@
     <!-- Preferanser -->
 
     <string name="antallOppgaver">Anzahl der Aufgaben</string>
-    <string name="txtVelgAntall">Wählen Sie, wie viele Aufgaben Sie pro Spiel möchten.</string>
+    <string name="txtVelgAntall">Anzahl Aufgaben pro Spiel.</string>
     <string name="box5Oppg">5 Aufgaben</string>
     <string name="box10Oppg">10 Aufgaben</string>
     <string name="box25Oppg">25 Aufgaben</string>
@@ -20,21 +20,21 @@
     <string name="sprok">Sprache</string>
 
 
-    <string name="feil">Nicht ganz richtig :( Richtige Antwort ist  :</string>
-    <string name="riktig">Gute Arbeit, du hast richtig geantwortet !!!</string>
+    <string name="feil">Fehl. Richtige Antwort ist:</string>
+    <string name="riktig">Richtig!</string>
 
 
     <!-- Dialog -->
 
     <!-- Hvis man vil avbryte spill -->
-    <string name="titleDialog1">Willst du das Spiel züchten?</string>
-    <string name="Avslutt">Fertig</string>
-    <string name="Avbryt">Stornieren</string>
+    <string name="titleDialog1">Das Spiel Verlassen?</string>
+    <string name="Avslutt">Beende</string>
+    <string name="Avbryt">Unterbrechen</string>
 
 
-    <string name="titleNyttSpillDialog">Möchten Sie zum Hauptbildschirm zurückkehren oder ein neues Spiel starten?</string>
-    <string name="startNytt">neues Spiel starten</string>
-    <string name="tilbake">Rückkehr</string>
+    <!-- <string name="titleNyttSpillDialog">Möchten Sie zum Hauptbildschirm zurückkehren oder ein neues Spiel starten?</string> -->
+    <string name="startNytt">Neues Spiel</string>
+    <string name="tilbake">Zurückgehen</string>
 
 
 
@@ -50,6 +50,6 @@
     <string name="leverSvar">Einreichen</string>
 
 
-    <string name="slett">mit id löschen</string>
+    <string name="slett">Mit ID löschen</string>
 
 </resources>

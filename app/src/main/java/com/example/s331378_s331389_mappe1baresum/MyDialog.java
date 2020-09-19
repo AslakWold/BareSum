@@ -30,7 +30,7 @@ public class MyDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
-        return new AlertDialog.Builder(getActivity()).setTitle(R.string.titleDialog1)
+        return new AlertDialog.Builder(getActivity())
                 .setPositiveButton(R.string.Avbryt, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -41,6 +41,7 @@ public class MyDialog extends DialogFragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         callback.btnAvslutt();
                     }
-                }).create();
+                }).setView(R.layout.dialog_activity1)
+                .create();
     }
 }
