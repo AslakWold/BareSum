@@ -153,4 +153,5 @@ public class StatistikkActivity extends AppCompatActivity {
             tysk();
         }
     }
+    //Endring av språk - slutt
 }

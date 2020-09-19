@@ -302,8 +302,9 @@ public void  ferdigSpill(int RESULT){
         getStatistikk("statistikk");
         getID("ID");
 
-        int feil = antall_oppgaver - etSpill.getAntall_riktige();
-        String nyttSpill = ID + " : " + etSpill.getAntall_riktige() + " : " + feil + " : " + antall_oppgaver + "\n";
+        //int feil = antall_oppgaver - etSpill.getAntall_riktige();
+        String nyttSpill = ID + " : " + tellerRiktigeSvar +
+                " : " + tellerFeilSvar + " : " + antall_oppgaver + "\n";
         statistikk+=nyttSpill;
         ID+=1;
         saveStatistikk("statistikk");
