@@ -62,9 +62,9 @@ public class StatistikkActivity extends AppCompatActivity {
 
 
         for(int i = 1; i< arrayListStat.size()+1; i++){
-            String [] elementer = arrayListStat.get(i-1).split("\\s+");
+            //String [] elementer = arrayListStat.get(i-1).split("\\s+");
             try{
-                int idSjekk = Integer.parseInt(elementer[0]);
+                int idSjekk = findID(arrayListStat.get(i-1));
 
                 if(idSlett==idSjekk){
                     arrayListStat.remove(i-1);
@@ -114,6 +114,29 @@ public class StatistikkActivity extends AppCompatActivity {
             ut+=etSpill+"\n";
         }
         return ut;
+    }
+
+    //Metode som finner ID-en til et spill
+    public int findID(String etSpill){
+        char [] spill = etSpill.toCharArray();
+        boolean fortsett = true;
+        String ut = "";
+        for(int i = 0; i<spill.length;i++){
+
+            //Finner ascii verdien til tegnet
+            int sjekk = spill[i] & 127;
+
+            //Om det er heltall vil ascii verdien være mellom 58 og 47
+            if(sjekk>47 && sjekk< 58){
+                ut+=spill[i];
+                fortsett=false;
+            }
+            //Breaker vis forrige verdi var tall og dette ikke er
+            else if(!fortsett){
+                break;
+            }
+        }
+        return Integer.parseInt(ut);
     }
 
     //kode for endring av språk

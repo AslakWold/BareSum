@@ -53,10 +53,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnStartSpill(View v) {
-        //statistikk.add("KUKBAJS");
-        //System.out.println(statistikk.get(0));
         Intent i = new Intent(this, SpillActivity.class);
-        //i.putStringArrayListExtra("statistikk",statistikk);
         startActivityForResult(i,420);
     }
 
