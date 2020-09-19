@@ -33,12 +33,6 @@ public class MainActivity extends AppCompatActivity {
         PreferenceManager.setDefaultValues(this,R.xml.preferences,false);
 
 
-        /*statistikk = "";
-        saveStatistikk();*/
-
-        /*if(statistikk==null){
-            saveStatistikk();
-        }*/
 
     }
 
@@ -138,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
                 statistikk = data.getStringArrayListExtra("statistikk");
 
             }
-
         }
 
 
